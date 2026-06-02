@@ -1,0 +1,272 @@
+{
+  "version": "1.0",
+  "tabs": [
+    {
+      "title": "主页",
+      "groups": [
+        {
+          "title": "编辑",
+          "iconOnly": true,
+          "buttons": [
+            { "label": "撤销", "icon": "↶", "command": "Edit.Undo" },
+            { "label": "重做", "icon": "↷", "command": "Edit.Redo" },
+            { "label": "移动", "icon": "↔", "command": "Edit.Move" },
+            { "label": "复制", "icon": "⎘", "command": "Edit.Copy" },
+            { "label": "旋转", "icon": "↻", "command": "Edit.Rotate" },
+            { "label": "缩放", "icon": "⤢", "command": "Edit.Scale" },
+            { "label": "镜像", "icon": "⇋", "command": "Edit.Mirror" },
+            { "label": "偏移", "icon": "║", "command": "Edit.Offset" },
+            { "label": "删除", "icon": "🗑", "command": "Edit.Delete" },
+            { "label": "取消选择", "icon": "✗", "command": "Edit.SelectNone" }
+          ]
+        },
+        {
+          "title": "绘图",
+          "iconOnly": true,
+          "buttons": [
+            { "label": "直线", "icon": "📏", "command": "Draw.Line" },
+            { "label": "圆", "icon": "⭕", "command": "Draw.Circle" },
+            { "label": "圆弧", "icon": "🌙", "command": "Draw.Arc" },
+            { "label": "矩形", "icon": "▭", "command": "Draw.Rectangle" },
+            { "label": "多段线", "icon": "⌇", "command": "Draw.Polyline" },
+            { "label": "多边形", "icon": "⬡", "command": "Draw.Polygon" },
+            { "label": "椭圆", "icon": "🥚", "command": "Draw.Ellipse" },
+            { "label": "样条", "icon": "〰", "command": "Draw.Spline" },
+            { "label": "点", "icon": "·", "command": "Draw.Point" },
+            { "label": "射线", "icon": "→", "command": "Draw.Ray" },
+            { "label": "构造线", "icon": "│", "command": "Draw.Xline" },
+            { "label": "文字", "icon": "A", "command": "Draw.Text" },
+            { "label": "多行文本", "icon": "¶", "command": "Draw.MText" },
+            { "label": "引线", "icon": "↗", "command": "Draw.Leader" }
+          ]
+        },
+        {
+          "title": "标记",
+          "buttons": [
+            { "label": "镀膜", "icon": "🎨", "command": "Mark.Coating" },
+            { "label": "黑化", "icon": "⚫", "command": "Mark.Blackening" },
+            { "label": "抛光", "icon": "✨", "command": "Mark.Polishing" }
+          ]
+        },
+        {
+          "title": "光学",
+          "buttons": [
+            { "label": "透镜", "icon": "🔍", "command": "Optic.Lens" },
+            { "label": "棱镜", "icon": "🔺", "command": "Optic.NewPrism" },
+            { "label": "光栅", "icon": "📊", "command": "Optic.Grating" },
+            { "label": "自动标注", "icon": "🅰", "command": "Optic.AutoDim" }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "视图",
+      "groups": [
+        {
+          "title": "场景",
+          "buttons": [
+            { "label": "测试场景", "icon": "🎯", "command": "Scene.LoadTest" },
+            { "label": "1000 线", "icon": "📈", "command": "Scene.Benchmark1k" },
+            { "label": "10000 线", "icon": "📊", "command": "Scene.Benchmark10k" }
+          ]
+        },
+        {
+          "title": "视图",
+          "iconOnly": true,
+          "buttons": [
+            { "label": "重置", "icon": "🏠", "command": "View.Reset" },
+            { "label": "全部", "icon": "🔍", "command": "View.ZoomExtents" },
+            { "label": "选中", "icon": "🎯", "command": "View.ZoomToSelected" },
+            { "label": "1:1", "icon": "🟰", "command": "View.ZoomOneToOne" },
+            { "label": "放大", "icon": "➕", "command": "View.ZoomIn" },
+            { "label": "缩小", "icon": "➖", "command": "View.ZoomOut" },
+            { "label": "网格", "icon": "▦", "command": "View.ToggleGrid" },
+            { "label": "捕捉", "icon": "⌖", "command": "View.ToggleSnap" },
+            { "label": "Round-trip", "icon": "🔄", "command": "View.RoundtripSelfTest" }
+          ]
+        },
+        {
+          "title": "文件",
+          "buttons": [
+            { "label": "加载", "icon": "📂", "command": "File.Open" },
+            { "label": "保存", "icon": "💾", "command": "File.Save" },
+            { "label": "另存", "icon": "💾+", "command": "File.SaveAs" },
+            { "label": "打印", "icon": "🖨", "command": "File.Print" },
+            { "label": "导出 PNG", "icon": "🖼", "command": "File.ExportPng" },
+            { "label": "导出 DXF", "icon": "📄", "command": "File.ExportDxf" },
+            { "label": "导出 PDF", "icon": "🅿", "command": "File.ExportPdf" }
+          ]
+        },
+        {
+          "title": "最近文件",
+          "iconOnly": true,
+          "buttons": [
+            { "label": "最近 1", "icon": "①", "command": "File.OpenRecent0" },
+            { "label": "最近 2", "icon": "②", "command": "File.OpenRecent1" },
+            { "label": "最近 3", "icon": "③", "command": "File.OpenRecent2" },
+            { "label": "最近 4", "icon": "④", "command": "File.OpenRecent3" },
+            { "label": "最近 5", "icon": "⑤", "command": "File.OpenRecent4" }
+          ]
+        },
+        {
+          "title": "工具",
+          "buttons": [
+            { "label": "设置", "icon": "⚙", "command": "Tools.Settings" }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "标注",
+      "groups": [
+        {
+          "title": "尺寸",
+          "iconOnly": true,
+          "buttons": [
+            { "label": "线性", "icon": "↕", "command": "Dim.Linear" },
+            { "label": "对齐", "icon": "⤡", "command": "Dim.Aligned" },
+            { "label": "半径", "icon": "R", "command": "Dim.Radial" },
+            { "label": "直径", "icon": "⌀", "command": "Dim.Diametric" },
+            { "label": "三点角度", "icon": "∠", "command": "Dim.Angular3" },
+            { "label": "坐标", "icon": "⋮", "command": "Dim.Ordinate" }
+          ]
+        },
+        {
+          "title": "标准",
+          "buttons": [
+            { "label": "标准", "icon": "S", "command": "Dim.Standard.Standard" },
+            { "label": "ISO", "icon": "I", "command": "Dim.Standard.ISO25" },
+            { "label": "GB", "icon": "G", "command": "Dim.Standard.GB" },
+            { "label": "光学GB", "icon": "◎", "command": "Dim.Standard.GBOptical" },
+            { "label": "公司", "icon": "C", "command": "Dim.Standard.Company" }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "标记",
+      "groups": [
+        {
+          "title": "表面处理",
+          "buttons": [
+            { "label": "镀膜", "icon": "🎨", "command": "Mark.Coating" },
+            { "label": "黑化", "icon": "⚫", "command": "Mark.Blackening" },
+            { "label": "抛光", "icon": "✨", "command": "Mark.Polishing" },
+            { "label": "喷砂", "icon": "❉", "command": "Mark.Sandblasting" },
+            { "label": "金刚石车削", "icon": "💎", "command": "Mark.DiamondTurning" },
+            { "label": "研磨", "icon": "⊙", "command": "Mark.Grinding" },
+            { "label": "粗糙度", "icon": "ℛ", "command": "Mark.SurfaceRoughness" }
+          ]
+        },
+        {
+          "title": "精度公差",
+          "buttons": [
+            { "label": "面形精度", "icon": "📐", "command": "Mark.FormAccuracy" },
+            { "label": "中心偏差", "icon": "⊕", "command": "Mark.CenterDeviation" },
+            { "label": "对中公差", "icon": "⊖", "command": "Mark.CenteringTolerance" },
+            { "label": "面形", "icon": "⌒", "command": "Mark.SurfaceForm" },
+            { "label": "表面缺陷", "icon": "⚠", "command": "Mark.SurfaceImperfection" },
+            { "label": "表面质量", "icon": "✓", "command": "Mark.SurfaceQuality" },
+            { "label": "表面纹理", "icon": "≋", "command": "Mark.SurfaceTexture" }
+          ]
+        },
+        {
+          "title": "光学元素",
+          "buttons": [
+            { "label": "有效孔径", "icon": "○", "command": "Mark.EffectiveAperture" },
+            { "label": "焦点", "icon": "⊛", "command": "Mark.FocalPoint" },
+            { "label": "光轴", "icon": "—", "command": "Mark.OpticalAxis" },
+            { "label": "装配", "icon": "⚙", "command": "Mark.Assembly" },
+            { "label": "检验", "icon": "🔬", "command": "Mark.Inspection" },
+            { "label": "加工", "icon": "🛠", "command": "Mark.Processing" },
+            { "label": "材料缺陷", "icon": "△", "command": "Mark.MaterialDefect" }
+          ]
+        },
+        {
+          "title": "ISO 10110",
+          "buttons": [
+            { "label": "10110-2 双折射", "icon": "②", "command": "Mark.ISO2" },
+            { "label": "10110-3 气泡", "icon": "③", "command": "Mark.ISO3" },
+            { "label": "10110-4 不均匀", "icon": "④", "command": "Mark.ISO4" },
+            { "label": "10110-12 非球面", "icon": "⑫", "command": "Mark.ISO12" },
+            { "label": "10110-14 波前", "icon": "⑭", "command": "Mark.ISO14" },
+            { "label": "激光损伤阈值", "icon": "⚡", "command": "Mark.LaserDamage" }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "光学",
+      "groups": [
+        {
+          "title": "透镜",
+          "buttons": [
+            { "label": "单透镜", "icon": "◐", "command": "Optic.SingleLens" },
+            { "label": "双胶合", "icon": "◑", "command": "Optic.DoubletLens" },
+            { "label": "通用透镜", "icon": "○", "command": "Optic.Lens" },
+            { "label": "棱镜", "icon": "🔺", "command": "Optic.NewPrism" },
+            { "label": "自动标注", "icon": "🅰", "command": "Optic.AutoDim" },
+            { "label": "标准图纸", "icon": "📄", "command": "Optic.StandardSheet" },
+            { "label": "导入设计", "icon": "📥", "command": "Optic.ImportDesign" }
+          ]
+        },
+        {
+          "title": "图框",
+          "buttons": [
+            { "label": "新建图框", "icon": "▭", "command": "Frame.NewFrame" },
+            { "label": "光学图框", "icon": "▦", "command": "Frame.NewOpticalFrame" },
+            { "label": "关联透镜", "icon": "🔗", "command": "Frame.LinkLens" },
+            { "label": "模式", "icon": "⇄", "command": "Frame.ToggleMode" }
+          ]
+        },
+        {
+          "title": "图层",
+          "buttons": [
+            { "label": "新增", "icon": "+", "command": "Layer.Add" },
+            { "label": "修改", "icon": "✎", "command": "Layer.Modify" },
+            { "label": "删除", "icon": "−", "command": "Layer.Remove" }
+          ]
+        },
+        {
+          "title": "公差",
+          "buttons": [
+            { "label": "快速", "icon": "±", "command": "Tolerance.Quick" },
+            { "label": "新增", "icon": "+±", "command": "Tolerance.Add" },
+            { "label": "编辑", "icon": "✎", "command": "Tolerance.Edit" }
+          ]
+        },
+        {
+          "title": "插入",
+          "buttons": [
+            { "label": "块", "icon": "▣", "command": "Insert.Block" },
+            { "label": "图像", "icon": "🖼", "command": "Insert.Image" },
+            { "label": "遮罩", "icon": "▒", "command": "Insert.Wipeout" },
+            { "label": "符号", "icon": "✦", "command": "Insert.Symbol" }
+          ]
+        },
+        {
+          "title": "光学尺寸",
+          "buttons": [
+            { "label": "两线角", "icon": "∠₂", "command": "Dim.Angular2Line" },
+            { "label": "中心厚", "icon": "↥", "command": "Dim.CenterThickness" },
+            { "label": "边厚", "icon": "↤", "command": "Dim.EdgeThickness" },
+            { "label": "矢高", "icon": "⌒", "command": "Dim.Sagitta" }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "帮助",
+      "groups": [
+        {
+          "title": "关于",
+          "buttons": [
+            { "label": "文档", "icon": "📖", "command": "Help.Docs" },
+            { "label": "反馈", "icon": "💬", "command": "Help.Feedback" },
+            { "label": "关于", "icon": "ℹ️", "command": "Help.About" }
+          ]
+        }
+      ]
+    }
+  ]
+}

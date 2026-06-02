@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+  <!-- 移动箭头 -->
+  <g stroke="#1177D7" stroke-width="2" fill="none">
+    <!-- 上下左右箭头 -->
+    <line x1="16" y1="6" x2="16" y2="26"/>
+    <line x1="6" y1="16" x2="26" y2="16"/>
+    <!-- 箭头头部 -->
+    <polyline points="12,10 16,6 20,10"/>
+    <polyline points="12,22 16,26 20,22"/>
+    <polyline points="10,12 6,16 10,20"/>
+    <polyline points="22,12 26,16 22,20"/>
+  </g>
+</svg>

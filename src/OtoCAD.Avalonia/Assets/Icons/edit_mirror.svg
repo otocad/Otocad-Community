@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+  <!-- 原始对象 -->
+  <polygon points="6,8 12,8 12,20 6,24" fill="none" stroke="#1177D7" stroke-width="2"/>
+  <!-- 镜像线 -->
+  <line x1="16" y1="4" x2="16" y2="28" stroke="#D11C1C" stroke-width="2" stroke-dasharray="2,2"/>
+  <!-- 镜像对象 -->
+  <polygon points="26,8 20,8 20,20 26,24" fill="none" stroke="#727272" stroke-width="2" stroke-dasharray="3,3"/>
+</svg>

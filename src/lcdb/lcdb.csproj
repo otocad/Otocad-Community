@@ -1,0 +1,66 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <RootNamespace>lcdb</RootNamespace>
+    <AssemblyName>lcdb</AssemblyName>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <Nullable>disable</Nullable>
+    <!-- v0.3+ 跨平台: 多目标. net10.0 = 跨平台 (OtoCAD.Avalonia 引用, 走 IGraphicsDraw 渲染);
+         net10.0-windows7.0 = WinForms 面 (src/OtoCAD 引用). GDI+ Draw(Graphics) 死路径用 #if WINDOWS 隔离. -->
+    <TargetFramework></TargetFramework>
+    <TargetFrameworks>net10.0;net10.0-windows7.0</TargetFrameworks>
+    <UseWindowsForms Condition="$(TargetFramework.EndsWith('-windows7.0'))">true</UseWindowsForms>
+    <UseWindowsForms Condition="!$(TargetFramework.EndsWith('-windows7.0'))">false</UseWindowsForms>
+  </PropertyGroup>
+
+  <!-- 纯 GDI+ 文件: 仅 WinForms 面编译 (跨平台走 IGraphicsDraw) -->
+  <ItemGroup Condition="!$(TargetFramework.EndsWith('-windows7.0'))">
+    <Compile Remove="Symbols\OpticalMarkSymbols.cs" />
+  </ItemGroup>
+
+  <PropertyGroup Condition="'$(Configuration)'=='Debug'">
+    <DefineConstants>$(DefineConstants);DEBUG;TRACE</DefineConstants>
+    <DebugType>portable</DebugType>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)'=='Release'">
+    <DebugType>none</DebugType>
+    <DebugSymbols>false</DebugSymbols>
+    <DefineConstants>$(DefineConstants);TRACE</DefineConstants>
+  </PropertyGroup>
+
+  <!-- 抑制不必要的包引用警告 (.NET 10 内置) -->
+  <PropertyGroup>
+    <NoWarn>$(NoWarn);NU1510</NoWarn>
+  </PropertyGroup>
+
+  <!-- 暂时排除引用上层项目(OtoCAD)的文件 (架构问题，需要后续重构) -->
+  <ItemGroup>
+    <!-- 引用 OtoCAD.Graphics.IDrawingContext -->
+    <Compile Remove="Extensions\EntityDrawExtensions.cs" />
+    <!-- 引用 OtoCAD.Interface 命名空间 -->
+    <Compile Remove="Parameters\ParameterDefinition.cs" />
+    <Compile Remove="Parameters\ParameterSystem.cs" />
+    <Compile Remove="Parameters\ParameterValidator.cs" />
+    <!-- 引用未定义的 CompositeEntity 类型 -->
+    <Compile Remove="DatabaseExtensions.cs" />
+    <!-- 重复的接口定义 (IEntityTransaction.cs 中已有定义) -->
+    <Compile Remove="DatabaseServices\Transaction\ITransactionManager.cs" />
+    <!-- Examples 不需要编译 -->
+    <Compile Remove="Examples\**\*.cs" />
+  </ItemGroup>
+
+  <!-- Project references -->
+  <ItemGroup>
+    <ProjectReference Include="..\LitMath\LitMath.csproj" />
+    <ProjectReference Include="..\lcinterface\lcinterface.csproj" />
+    <ProjectReference Include="..\netDxf\netDxf.csproj" />
+  </ItemGroup>
+
+  <!-- NuGet packages -->
+  <ItemGroup>
+    <PackageReference Include="NLog" />
+  </ItemGroup>
+
+</Project>

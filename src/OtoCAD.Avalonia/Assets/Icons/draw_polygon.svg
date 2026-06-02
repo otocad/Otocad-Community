@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+  <!-- 六边形 -->
+  <polygon points="16,6 25,11 25,21 16,26 7,21 7,11" fill="none" stroke="#0D5DB8" stroke-width="2"/>
+</svg>

@@ -1,0 +1,78 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:dlg="using:OtoCAD.Avalonia.Dialogs"
+        x:Class="OtoCAD.Avalonia.Dialogs.AssemblyWizardDialog"
+        x:CompileBindings="False"
+        Title="新建通用透镜系统"
+        Width="640" Height="560"
+        WindowStartupLocation="CenterOwner"
+        CanResize="True">
+  <Grid RowDefinitions="Auto,*,Auto">
+
+    <Border Grid.Row="0" Background="#E5F1FB" Padding="16,12" BorderBrush="#B8D4EA" BorderThickness="0,0,0,1">
+      <StackPanel>
+        <TextBlock Text="通用透镜系统 (OpticalAssembly)" FontWeight="Bold" FontSize="14"/>
+        <TextBlock Text="沿光轴排列多个透镜 + 空气间隙. 适合物镜组/目镜组截面."
+                   FontSize="11" Foreground="#666" TextWrapping="Wrap"/>
+      </StackPanel>
+    </Border>
+
+    <Grid Grid.Row="1" RowDefinitions="Auto,*">
+      <!-- 预设 -->
+      <Border Grid.Row="0" BorderBrush="#DDD" BorderThickness="1" Padding="12" Margin="16,12,16,4" CornerRadius="4">
+        <StackPanel Spacing="6">
+          <TextBlock Text="快速预设" FontWeight="SemiBold"/>
+          <StackPanel Orientation="Horizontal" Spacing="6">
+            <Button Name="PresetSingleBtn"    Content="单透镜" Padding="8,2"/>
+            <Button Name="PresetDoubletBtn"   Content="消色差双胶合等效" Padding="8,2"/>
+            <Button Name="PresetTripletBtn"   Content="Cooke 三片" Padding="8,2"/>
+            <Button Name="PresetObjectiveBtn" Content="物镜组 (双胶合 + 单片)" Padding="8,2"/>
+            <Button Name="PresetClearBtn"     Content="清空" Padding="8,2"/>
+          </StackPanel>
+        </StackPanel>
+      </Border>
+
+      <!-- 镜片列表 -->
+      <Border Grid.Row="1" BorderBrush="#DDD" BorderThickness="1" Padding="12" Margin="16,4,16,8" CornerRadius="4">
+        <Grid RowDefinitions="Auto,*,Auto">
+          <Grid Grid.Row="0" ColumnDefinitions="60,80,80,80,80,80,*">
+            <TextBlock Grid.Column="0" Text="#" FontWeight="SemiBold"/>
+            <TextBlock Grid.Column="1" Text="间隙" FontWeight="SemiBold"/>
+            <TextBlock Grid.Column="2" Text="直径" FontWeight="SemiBold"/>
+            <TextBlock Grid.Column="3" Text="厚度" FontWeight="SemiBold"/>
+            <TextBlock Grid.Column="4" Text="R1" FontWeight="SemiBold"/>
+            <TextBlock Grid.Column="5" Text="R2" FontWeight="SemiBold"/>
+            <TextBlock Grid.Column="6" Text="材料" FontWeight="SemiBold"/>
+          </Grid>
+          <ScrollViewer Grid.Row="1">
+            <ItemsControl Name="ItemsList">
+              <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                  <Grid ColumnDefinitions="60,80,80,80,80,80,*,Auto" Margin="0,2">
+                    <TextBlock Grid.Column="0" Text="{Binding Index}" VerticalAlignment="Center"/>
+                    <NumericUpDown Grid.Column="1" Value="{Binding GapBefore}" Minimum="0" Maximum="500" Increment="1" FormatString="F1" Width="75"/>
+                    <NumericUpDown Grid.Column="2" Value="{Binding Diameter}"  Minimum="0.5" Maximum="500" Increment="1" FormatString="F1" Width="75"/>
+                    <NumericUpDown Grid.Column="3" Value="{Binding Thickness}" Minimum="0.1" Maximum="100" Increment="0.5" FormatString="F1" Width="75"/>
+                    <NumericUpDown Grid.Column="4" Value="{Binding R1}"        Minimum="-10000" Maximum="10000" Increment="1" FormatString="F1" Width="75"/>
+                    <NumericUpDown Grid.Column="5" Value="{Binding R2}"        Minimum="-10000" Maximum="10000" Increment="1" FormatString="F1" Width="75"/>
+                    <TextBox Grid.Column="6" Text="{Binding Material}" Width="120"/>
+                    <Button Grid.Column="7" Content="✕" Padding="6,2" Margin="4,0,0,0"
+                            CommandParameter="{Binding}" Click="OnRemoveItem"/>
+                  </Grid>
+                </DataTemplate>
+              </ItemsControl.ItemTemplate>
+            </ItemsControl>
+          </ScrollViewer>
+          <Button Grid.Row="2" Name="AddItemBtn" Content="+ 加一片" HorizontalAlignment="Left" Padding="12,4" Margin="0,8,0,0"/>
+        </Grid>
+      </Border>
+    </Grid>
+
+    <Border Grid.Row="2" Background="#F5F5F5" Padding="16,8" BorderBrush="#DDD" BorderThickness="0,1,0,0">
+      <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Spacing="8">
+        <Button Name="OkBtn" Content="确定 (放置)" Width="100" IsDefault="True"/>
+        <Button Name="CancelBtn" Content="取消" Width="80" IsCancel="True"/>
+      </StackPanel>
+    </Border>
+  </Grid>
+</Window>

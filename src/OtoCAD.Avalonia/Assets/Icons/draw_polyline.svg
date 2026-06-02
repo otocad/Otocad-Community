@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+  <polyline points="5,20 10,8 16,14 22,10 27,18" fill="none" stroke="#0D5DB8" stroke-width="2"/>
+  <!-- 顶点 -->
+  <circle cx="5" cy="20" r="2" fill="#0D5DB8"/>
+  <circle cx="10" cy="8" r="2" fill="#0D5DB8"/>
+  <circle cx="16" cy="14" r="2" fill="#0D5DB8"/>
+  <circle cx="22" cy="10" r="2" fill="#0D5DB8"/>
+  <circle cx="27" cy="18" r="2" fill="#0D5DB8"/>
+</svg>

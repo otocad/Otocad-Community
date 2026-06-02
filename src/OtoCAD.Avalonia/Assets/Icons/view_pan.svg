@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128px" height="128px">
+  <defs>
+    <linearGradient id="pan-gradient" gradientUnits="userSpaceOnUse">
+      <stop style="stop-color: #4b70f5;"/>
+    </linearGradient>
+  </defs>
+  <!-- 手掌形状 -->
+  <path d="M 64 30 
+           C 64 25, 60 20, 55 20
+           C 50 20, 46 25, 46 30
+           L 46 50
+           L 40 45
+           C 37 42, 32 42, 29 45
+           C 26 48, 26 53, 29 56
+           L 45 72
+           L 45 95
+           C 45 100, 49 104, 54 104
+           L 74 104
+           C 79 104, 83 100, 83 95
+           L 83 50
+           L 83 30
+           C 83 25, 79 20, 74 20
+           C 69 20, 65 25, 65 30
+           L 64 30
+           Z" 
+        fill="url(#pan-gradient)" 
+        stroke="none"/>
+  <!-- 手指细节 -->
+  <line x1="55" y1="30" x2="55" y2="50" stroke="white" stroke-width="2" stroke-linecap="round"/>
+  <line x1="64" y1="30" x2="64" y2="50" stroke="white" stroke-width="2" stroke-linecap="round"/>
+  <line x1="73" y1="30" x2="73" y2="50" stroke="white" stroke-width="2" stroke-linecap="round"/>
+</svg>

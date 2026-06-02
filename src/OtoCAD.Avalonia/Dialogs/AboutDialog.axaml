@@ -1,0 +1,57 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="OtoCAD.Avalonia.Dialogs.AboutDialog"
+        Title="关于 OtoCAD"
+        Width="460" Height="380"
+        WindowStartupLocation="CenterOwner"
+        CanResize="False">
+  <Grid RowDefinitions="Auto,*,Auto">
+
+    <Border Grid.Row="0" Background="#E5F1FB" Padding="20,16" BorderBrush="#B8D4EA" BorderThickness="0,0,0,1">
+      <StackPanel>
+        <TextBlock Text="OtoCAD Avalonia" FontWeight="Bold" FontSize="20"/>
+        <TextBlock Name="VersionText" Text="v0.3.1" FontSize="13" Foreground="#666" Margin="0,2,0,0"/>
+        <TextBlock Text="光学 CAD — GB/T 13323-2009 合规" FontSize="11" Foreground="#888" Margin="0,4,0,0"/>
+      </StackPanel>
+    </Border>
+
+    <ScrollViewer Grid.Row="1" Padding="20,16">
+      <StackPanel Spacing="10">
+
+        <TextBlock TextWrapping="Wrap" FontSize="12">
+          为光学元件设计/制造提供的二维 CAD 绘图工具. 内置光学专用实体 (透镜 / 棱镜 / 镀膜 / 表面缺陷 mark), 自动生成符合 GB/T 13323-2009 国标的零件图.
+        </TextBlock>
+
+        <Border BorderBrush="#DDD" BorderThickness="1" Padding="12" CornerRadius="4">
+          <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto,Auto,Auto,Auto">
+            <TextBlock Grid.Row="0" Grid.Column="0" Text="技术栈:"  FontWeight="SemiBold" Margin="0,2,12,2"/>
+            <TextBlock Grid.Row="0" Grid.Column="1" Text="C# 12 + .NET 10 + Avalonia 11.x + SkiaSharp" Margin="0,2"/>
+            <TextBlock Grid.Row="1" Grid.Column="0" Text="协议:"    FontWeight="SemiBold" Margin="0,2,12,2"/>
+            <TextBlock Grid.Row="1" Grid.Column="1" Text="MIT License" Margin="0,2"/>
+            <TextBlock Grid.Row="2" Grid.Column="0" Text="作者:"    FontWeight="SemiBold" Margin="0,2,12,2"/>
+            <TextBlock Grid.Row="2" Grid.Column="1" Text="RayPragma" Margin="0,2"/>
+            <TextBlock Grid.Row="3" Grid.Column="0" Text="仓库:"    FontWeight="SemiBold" Margin="0,2,12,2"/>
+            <TextBlock Grid.Row="3" Grid.Column="1" Name="RepoText" Text="github.com/otocad/Otocad-Community" Foreground="#0078D4" Margin="0,2" Cursor="Hand"/>
+            <TextBlock Grid.Row="4" Grid.Column="0" Text="文档:"    FontWeight="SemiBold" Margin="0,2,12,2"/>
+            <TextBlock Grid.Row="4" Grid.Column="1" Name="DocsText" Text="README.md (GitHub)" Foreground="#0078D4" Margin="0,2" Cursor="Hand"/>
+          </Grid>
+        </Border>
+
+        <TextBlock TextWrapping="Wrap" FontSize="11" Foreground="#666">
+          国标合规检查: GB/T 13323-2009 (光学制图) · GB/T 14689 (技术制图图框) · GB/T 17450 (技术制图图线). ISO 10110 系列表面缺陷 mark.
+        </TextBlock>
+
+      </StackPanel>
+    </ScrollViewer>
+
+    <Border Grid.Row="2" Background="#F5F5F5" Padding="16,8" BorderBrush="#DDD" BorderThickness="0,1,0,0">
+      <Grid ColumnDefinitions="*,Auto">
+        <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
+          <Button Name="CheckUpdateBtn" Content="检查更新" Width="90"/>
+          <TextBlock Name="UpdateStatusText" VerticalAlignment="Center" FontSize="11" Foreground="#666"/>
+        </StackPanel>
+        <Button Grid.Column="1" Name="OkBtn" Content="确定" Width="80" IsDefault="True" IsCancel="True"/>
+      </Grid>
+    </Border>
+  </Grid>
+</Window>

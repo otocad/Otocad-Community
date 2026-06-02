@@ -1,0 +1,56 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="using:OtoCAD.Avalonia"
+        x:Class="OtoCAD.Avalonia.Dialogs.ImportSelectionDialog"
+        Title="导入光学设计"
+        Width="760" Height="580"
+        WindowStartupLocation="CenterOwner">
+  <Grid RowDefinitions="Auto,*,Auto">
+
+    <!-- 头部: 文件 + 系统信息 -->
+    <Border Grid.Row="0" Background="#E5F1FB" Padding="16,10" BorderBrush="#B8D4EA" BorderThickness="0,0,0,1">
+      <StackPanel>
+        <TextBlock Text="导入光学设计" FontWeight="Bold" FontSize="14"/>
+        <TextBlock Name="SummaryText" Text="" FontSize="11" Foreground="#555"/>
+      </StackPanel>
+    </Border>
+
+    <!-- 中部: 左预览 | 右元件勾选 -->
+    <Grid Grid.Row="1" ColumnDefinitions="*,300">
+      <Border Grid.Column="0" Margin="8" BorderBrush="#DDD" BorderThickness="1" CornerRadius="4" ClipToBounds="True">
+        <Grid>
+          <local:CadCanvas Name="PreviewCanvas"/>
+          <TextBlock Text="光路图预览 (勾选即所见)" FontSize="10" Foreground="#999"
+                     HorizontalAlignment="Left" VerticalAlignment="Top" Margin="6,4"/>
+        </Grid>
+      </Border>
+
+      <Border Grid.Column="1" Margin="0,8,8,8" BorderBrush="#DDD" BorderThickness="1" CornerRadius="4">
+        <DockPanel>
+          <Border DockPanel.Dock="Top" Background="#F5F5F5" Padding="8,5" BorderBrush="#DDD" BorderThickness="0,0,0,1">
+            <TextBlock Text="元件 (勾选要导入的)" FontWeight="SemiBold" FontSize="12"/>
+          </Border>
+          <ScrollViewer>
+            <StackPanel Name="ItemsPanel" Margin="6" Spacing="2"/>
+          </ScrollViewer>
+        </DockPanel>
+      </Border>
+    </Grid>
+
+    <!-- 底部: 生成选项 + 按钮 -->
+    <Border Grid.Row="2" Background="#F5F5F5" Padding="16,8" BorderBrush="#DDD" BorderThickness="0,1,0,0">
+      <Grid RowDefinitions="Auto,Auto">
+        <StackPanel Grid.Row="0" Orientation="Horizontal" Spacing="16" Margin="0,0,0,8">
+          <CheckBox Name="LayoutTabCheck" Content="生成光路图总览 tab" IsChecked="True"/>
+          <CheckBox Name="PerElementCheck" Content="每个勾选元件生成加工图 tab" IsChecked="True"/>
+        </StackPanel>
+        <Grid Grid.Row="1" ColumnDefinitions="Auto,Auto,*,Auto,Auto">
+          <Button Grid.Column="0" Name="SelectAllBtn" Content="全选" Padding="10,2"/>
+          <Button Grid.Column="1" Name="SelectNoneBtn" Content="全不选" Padding="10,2" Margin="8,0,0,0"/>
+          <Button Grid.Column="3" Name="OkBtn" Content="导入" Width="100" IsDefault="True"/>
+          <Button Grid.Column="4" Name="CancelBtn" Content="取消" Width="80" Margin="8,0,0,0" IsCancel="True"/>
+        </Grid>
+      </Grid>
+    </Border>
+  </Grid>
+</Window>

@@ -1,0 +1,66 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="OtoCAD.Avalonia.Dialogs.ToleranceInputDialog"
+        Title="新增公差"
+        Width="380" Height="380"
+        WindowStartupLocation="CenterOwner"
+        CanResize="False">
+  <Grid RowDefinitions="Auto,*,Auto">
+
+    <Border Grid.Row="0" Background="#E5F1FB" Padding="16,12" BorderBrush="#B8D4EA" BorderThickness="0,0,0,1">
+      <StackPanel>
+        <TextBlock Text="公差参数" FontWeight="Bold" FontSize="14"/>
+        <TextBlock Text="设定公称尺寸与偏差,确定后在画布上单击放置公差标注"
+                   FontSize="11" Foreground="#666"/>
+      </StackPanel>
+    </Border>
+
+    <ScrollViewer Grid.Row="1" Padding="16">
+      <StackPanel Spacing="12">
+
+        <Grid ColumnDefinitions="100,*">
+          <TextBlock Grid.Column="0" Text="公称尺寸:" VerticalAlignment="Center"/>
+          <NumericUpDown Grid.Column="1" Name="NominalSpin"
+                         Minimum="0" Maximum="100000" Increment="1" FormatString="F3"/>
+        </Grid>
+
+        <Border BorderBrush="#DDD" BorderThickness="1" Padding="12" CornerRadius="4">
+          <StackPanel Spacing="6">
+            <RadioButton Name="CustomRadio" Content="自定义偏差" GroupName="mode" IsChecked="True"/>
+            <Grid ColumnDefinitions="100,*" Margin="20,0,0,0">
+              <TextBlock Grid.Column="0" Text="上偏差 (+):" VerticalAlignment="Center"/>
+              <NumericUpDown Grid.Column="1" Name="UpperSpin"
+                             Minimum="-1000" Maximum="1000" Increment="0.01" FormatString="F3"/>
+            </Grid>
+            <Grid ColumnDefinitions="100,*" Margin="20,0,0,0">
+              <TextBlock Grid.Column="0" Text="下偏差 (−):" VerticalAlignment="Center"/>
+              <NumericUpDown Grid.Column="1" Name="LowerSpin"
+                             Minimum="-1000" Maximum="1000" Increment="0.01" FormatString="F3"/>
+            </Grid>
+          </StackPanel>
+        </Border>
+
+        <Border BorderBrush="#DDD" BorderThickness="1" Padding="12" CornerRadius="4">
+          <StackPanel Spacing="6">
+            <RadioButton Name="StandardRadio" Content="标准公差等级 (GB/T 1800)" GroupName="mode"/>
+            <Grid ColumnDefinitions="100,*" Margin="20,0,0,0">
+              <TextBlock Grid.Column="0" Text="等级:" VerticalAlignment="Center"/>
+              <ComboBox Grid.Column="1" Name="GradeCombo" HorizontalAlignment="Stretch"/>
+            </Grid>
+          </StackPanel>
+        </Border>
+
+        <CheckBox Name="ShowFrameCheck" Content="显示边框" IsChecked="True"/>
+        <TextBlock Name="PreviewText" Foreground="#0A7" FontWeight="SemiBold"/>
+
+      </StackPanel>
+    </ScrollViewer>
+
+    <Border Grid.Row="2" Background="#F5F5F5" Padding="16,8" BorderBrush="#DDD" BorderThickness="0,1,0,0">
+      <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Spacing="8">
+        <Button Name="OkBtn" Content="确定 (放置)" Width="100" IsDefault="True"/>
+        <Button Name="CancelBtn" Content="取消" Width="80" IsCancel="True"/>
+      </StackPanel>
+    </Border>
+  </Grid>
+</Window>

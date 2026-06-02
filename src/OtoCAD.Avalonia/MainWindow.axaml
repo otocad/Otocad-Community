@@ -1,0 +1,131 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="using:OtoCAD.Avalonia"
+        xmlns:ribbon="using:OtoCAD.Avalonia.Ribbon"
+        xmlns:pp="using:OtoCAD.Avalonia.PropertyPanel"
+        xmlns:chat="using:OtoCAD.Avalonia.Chat"
+        x:Class="OtoCAD.Avalonia.MainWindow"
+        Title="OtoCAD Avalonia v0.3.1 — 光学 CAD"
+        Width="1280" Height="800">
+  <Window.Styles>
+    <!-- 画布顶部浮动视图工具栏: 小尺寸纯图标按钮 -->
+    <Style Selector="Border#FloatingViewBar Button">
+      <Setter Property="Background" Value="Transparent"/>
+      <Setter Property="BorderThickness" Value="0"/>
+      <Setter Property="Padding" Value="6,2"/>
+      <Setter Property="MinWidth" Value="26"/>
+      <Setter Property="MinHeight" Value="22"/>
+      <Setter Property="CornerRadius" Value="4"/>
+      <Setter Property="FontSize" Value="13"/>
+      <Setter Property="Foreground" Value="#2A2A2A"/>
+      <Setter Property="VerticalContentAlignment" Value="Center"/>
+      <Setter Property="HorizontalContentAlignment" Value="Center"/>
+    </Style>
+    <Style Selector="Border#FloatingViewBar Button:pointerover /template/ ContentPresenter">
+      <Setter Property="Background" Value="#15000000"/>
+      <Setter Property="CornerRadius" Value="4"/>
+    </Style>
+    <Style Selector="Border#FloatingViewBar Button:pressed /template/ ContentPresenter">
+      <Setter Property="Background" Value="#25000000"/>
+      <Setter Property="CornerRadius" Value="4"/>
+    </Style>
+
+    <!-- 状态栏 ToggleButton (网格/捕捉): 关=灰字, 开=蓝底白字 -->
+    <Style Selector="ToggleButton.statusToggle">
+      <Setter Property="Background" Value="Transparent"/>
+      <Setter Property="BorderThickness" Value="0"/>
+      <Setter Property="Padding" Value="8,2"/>
+      <Setter Property="MinHeight" Value="22"/>
+      <Setter Property="CornerRadius" Value="4"/>
+      <Setter Property="FontSize" Value="12"/>
+      <Setter Property="Foreground" Value="#888"/>
+    </Style>
+    <Style Selector="ToggleButton.statusToggle:pointerover /template/ ContentPresenter">
+      <Setter Property="Background" Value="#1F000000"/>
+      <Setter Property="CornerRadius" Value="4"/>
+    </Style>
+    <Style Selector="ToggleButton.statusToggle:checked /template/ ContentPresenter">
+      <Setter Property="Background" Value="#1976D2"/>
+      <Setter Property="TextElement.Foreground" Value="White"/>
+      <Setter Property="CornerRadius" Value="4"/>
+    </Style>
+    <Style Selector="ToggleButton.statusToggle:checked:pointerover /template/ ContentPresenter">
+      <Setter Property="Background" Value="#1565C0"/>
+      <Setter Property="CornerRadius" Value="4"/>
+    </Style>
+  </Window.Styles>
+  <Grid RowDefinitions="Auto,*,Auto">
+    <!-- POC-03: Ribbon -->
+    <ribbon:RibbonControl Grid.Row="0" Name="MainRibbon"/>
+
+    <!-- 中部: 左 AI 助手 | 中 画布 | 右 属性面板 -->
+    <Grid Grid.Row="1" ColumnDefinitions="Auto,*,Auto">
+      <!-- 左: AI 助手 -->
+      <Border Grid.Column="0" BorderBrush="#E0E0E0" BorderThickness="0,0,1,0">
+        <chat:ChatPanel Name="MainChatPanel"/>
+      </Border>
+
+      <!-- 中: 画布 + 顶部居中浮动视图按钮 (同 cell, z-order 叠加) -->
+      <Grid Grid.Column="1">
+        <!-- MDI: 多文档 tab, 每个 tab 一个独立 CadCanvas (代码创建/管理). Tab1=光路图, 其余=元件加工图. -->
+        <TabControl Name="DocTabs" TabStripPlacement="Top" Padding="0"/>
+        <Border Name="FloatingViewBar"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Top"
+                Margin="0,44,0,0"
+                Padding="3"
+                Background="#F2FFFFFF"
+                BorderBrush="#22000000"
+                BorderThickness="1"
+                CornerRadius="14"
+                BoxShadow="0 2 8 0 #18000000">
+          <StackPanel Orientation="Horizontal" Spacing="1">
+            <Button Name="FvbZoomExtents"  Content="⛶"  ToolTip.Tip="缩放到全部 (Ctrl+0)"/>
+            <Button Name="FvbZoomSelected" Content="▣"  ToolTip.Tip="缩放到选中"/>
+            <Button Name="FvbZoomOneToOne" Content="1:1" ToolTip.Tip="实际尺寸" FontSize="11"/>
+            <Border Width="1" Background="#15000000" Margin="4,3"/>
+            <Button Name="FvbZoomIn"       Content="＋"  ToolTip.Tip="放大 (Ctrl++)"/>
+            <Button Name="FvbZoomOut"      Content="−"   ToolTip.Tip="缩小 (Ctrl+-)"/>
+          </StackPanel>
+        </Border>
+
+        <!-- 图框模式醒目横幅: 仅图框模式可见 (code-behind 控制 IsVisible), 告知如何退出 -->
+        <Border Name="FrameModeBanner" IsVisible="False"
+                HorizontalAlignment="Stretch" VerticalAlignment="Top"
+                Background="#FFF3CD" BorderBrush="#FFC107" BorderThickness="0,0,0,2"
+                Padding="12,8" BoxShadow="0 2 6 0 #20000000">
+          <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="10">
+            <TextBlock Text="⚠ 图框模式" FontWeight="Bold" FontSize="13" Foreground="#856404" VerticalAlignment="Center"/>
+            <TextBlock Text="新建实体归入图框图层 · 按 ESC 退出, 或点 ribbon「图框 ▸ 模式」切回绘图"
+                       FontSize="12" Foreground="#856404" VerticalAlignment="Center"/>
+          </StackPanel>
+        </Border>
+      </Grid>
+      <!-- 右: 属性面板 -->
+      <Border Grid.Column="2" BorderBrush="#E0E0E0" BorderThickness="1,0,0,0">
+        <pp:PropertyPanelControl Name="MainPropertyPanel"/>
+      </Border>
+    </Grid>
+
+    <!-- 状态栏: 每段信息用固定 Width 的 Border 框住 (= splitter 槽位),
+         不需要等宽字体, 内部文字长度变化不影响外部布局 -->
+    <Border Grid.Row="2" Background="#E8E8E8" Padding="8,4">
+      <Grid ColumnDefinitions="*,Auto">
+        <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
+          <Border Width="120"><TextBlock Name="StatusText"          Text="就绪"     VerticalAlignment="Center"/></Border>
+          <Border Width="180"><TextBlock Name="MouseCoordText"      Text="鼠标: -, -" VerticalAlignment="Center"/></Border>
+          <Border Width="100"><TextBlock Name="ScaleText"           Text="缩放: 100%" VerticalAlignment="Center"/></Border>
+          <Border Width="80" ><TextBlock Name="EntityCountText"     Text="实体: 0"  VerticalAlignment="Center"/></Border>
+          <Border Width="70" ><TextBlock Name="SelectionCountText"  Text="选中: 0"  VerticalAlignment="Center"/></Border>
+          <Border Width="80" ><TextBlock Name="ModeText"            Text="模式: 绘图" VerticalAlignment="Center" Foreground="#666"/></Border>
+          <Border Width="60" ><TextBlock Name="FpsText"             Text="FPS: -"   VerticalAlignment="Center"/></Border>
+        </StackPanel>
+        <!-- 状态栏右侧: 网格/捕捉 ToggleButton (开=蓝底白字, 关=灰字) -->
+        <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="4" VerticalAlignment="Center">
+          <ToggleButton Name="SbGridToggle" Classes="statusToggle" Content="网格" ToolTip.Tip="网格 (F7)"/>
+          <ToggleButton Name="SbSnapToggle" Classes="statusToggle" Content="捕捉" ToolTip.Tip="对象捕捉 (F9)"/>
+        </StackPanel>
+      </Grid>
+    </Border>
+  </Grid>
+</Window>

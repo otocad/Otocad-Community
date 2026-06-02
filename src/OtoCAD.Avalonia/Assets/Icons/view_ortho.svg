@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128px" height="128px">
+  <defs>
+    <linearGradient id="ortho-gradient" gradientUnits="userSpaceOnUse">
+      <stop style="stop-color: #4b70f5;"/>
+    </linearGradient>
+  </defs>
+  <!-- 正交十字线 -->
+  <line x1="64" y1="20" x2="64" y2="108" stroke="url(#ortho-gradient)" stroke-width="6" stroke-linecap="round"/>
+  <line x1="20" y1="64" x2="108" y2="64" stroke="url(#ortho-gradient)" stroke-width="6" stroke-linecap="round"/>
+  <!-- 角度标记 -->
+  <circle cx="64" cy="64" r="20" fill="none" stroke="url(#ortho-gradient)" stroke-width="3"/>
+  <!-- 90度标记 -->
+  <text x="70" y="45" font-family="Arial" font-size="14" fill="url(#ortho-gradient)">90°</text>
+</svg>

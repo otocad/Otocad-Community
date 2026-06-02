@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+  <ellipse cx="8" cy="8" rx="3" ry="6" fill="none" stroke="#333" stroke-width="1"/>
+  <line x1="5" y1="8" x2="11" y2="8" stroke="#cc0000" stroke-width="1.5"/>
+  <text x="12" y="10" font-size="4" fill="#cc0000">Tc</text>
+</svg>
