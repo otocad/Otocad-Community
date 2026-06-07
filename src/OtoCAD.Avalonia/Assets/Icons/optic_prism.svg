@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+  <!-- 棱镜: 三角 + 折射线 -->
+  <g stroke="#1177D7" stroke-width="2" fill="none">
+    <polygon points="16,5 27,25 5,25"/>
+  </g>
+  <line x1="2" y1="16" x2="13" y2="16" stroke="#1177D7" stroke-width="1.5"/>
+  <line x1="18" y1="18" x2="30" y2="13" stroke="#1177D7" stroke-width="1.5"/>
+</svg>

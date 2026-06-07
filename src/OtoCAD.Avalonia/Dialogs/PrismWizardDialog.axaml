@@ -1,0 +1,69 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="OtoCAD.Avalonia.Dialogs.PrismWizardDialog"
+        Title="新建棱镜"
+        Width="420" Height="380"
+        WindowStartupLocation="CenterOwner"
+        CanResize="False">
+  <Grid RowDefinitions="Auto,*,Auto">
+
+    <Border Grid.Row="0" Background="#E5F1FB" Padding="16,12" BorderBrush="#B8D4EA" BorderThickness="0,0,0,1">
+      <StackPanel>
+        <TextBlock Text="棱镜参数" FontWeight="Bold" FontSize="14"/>
+        <TextBlock Text="填完点确定后,移动鼠标到画布点击放置棱镜中心"
+                   FontSize="11" Foreground="#666"/>
+      </StackPanel>
+    </Border>
+
+    <ScrollViewer Grid.Row="1" Padding="16">
+      <StackPanel Spacing="14">
+
+        <Border BorderBrush="#DDD" BorderThickness="1" Padding="12" CornerRadius="4">
+          <StackPanel Spacing="8">
+            <TextBlock Text="棱镜类型" FontWeight="SemiBold"/>
+            <ComboBox Name="TypeCombo" HorizontalAlignment="Stretch">
+              <ComboBoxItem Content="直角棱镜 (RightAngle)"/>
+              <ComboBoxItem Content="屋脊棱镜 (Roof) — P1 占位"/>
+              <ComboBoxItem Content="道威棱镜 (Dove) — P1 占位"/>
+              <ComboBoxItem Content="五角棱镜 (Penta) — P1 占位"/>
+            </ComboBox>
+          </StackPanel>
+        </Border>
+
+        <Border BorderBrush="#DDD" BorderThickness="1" Padding="12" CornerRadius="4">
+          <StackPanel Spacing="8">
+            <TextBlock Text="几何 (mm)" FontWeight="SemiBold"/>
+            <Grid ColumnDefinitions="120,*">
+              <TextBlock Grid.Column="0" Text="底边 W:" VerticalAlignment="Center"/>
+              <NumericUpDown Grid.Column="1" Name="WidthSpin"
+                             Minimum="2" Maximum="500" Increment="1" FormatString="F2"/>
+            </Grid>
+            <Grid ColumnDefinitions="120,*">
+              <TextBlock Grid.Column="0" Text="竖边 H:" VerticalAlignment="Center"/>
+              <NumericUpDown Grid.Column="1" Name="HeightSpin"
+                             Minimum="2" Maximum="500" Increment="1" FormatString="F2"/>
+            </Grid>
+          </StackPanel>
+        </Border>
+
+        <Border BorderBrush="#DDD" BorderThickness="1" Padding="12" CornerRadius="4">
+          <StackPanel Spacing="8">
+            <TextBlock Text="材料" FontWeight="SemiBold"/>
+            <Grid ColumnDefinitions="120,*">
+              <TextBlock Grid.Column="0" Text="玻璃牌号:" VerticalAlignment="Center"/>
+              <ComboBox Grid.Column="1" Name="MaterialCombo"/>
+            </Grid>
+          </StackPanel>
+        </Border>
+
+      </StackPanel>
+    </ScrollViewer>
+
+    <Border Grid.Row="2" Background="#F5F5F5" Padding="16,8" BorderBrush="#DDD" BorderThickness="0,1,0,0">
+      <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Spacing="8">
+        <Button Name="OkBtn" Content="确定 (放置)" Width="100" IsDefault="True"/>
+        <Button Name="CancelBtn" Content="取消" Width="80" IsCancel="True"/>
+      </StackPanel>
+    </Border>
+  </Grid>
+</Window>

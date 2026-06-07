@@ -1,0 +1,17 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:OtoCAD.Avalonia.PropertyPanel"
+             x:Class="OtoCAD.Avalonia.PropertyPanel.PropertyPanelControl"
+             Width="280">
+  <Grid RowDefinitions="Auto,*" Background="#FAFAFA">
+    <!-- 顶部标题 -->
+    <Border Grid.Row="0" Background="#E5F1FB" Padding="10,8" BorderBrush="#B8D4EA" BorderThickness="0,0,0,1">
+      <TextBlock Name="TitleText" FontWeight="Bold" FontSize="14" Text="属性"/>
+    </Border>
+
+    <!-- 内容区: Phase 1F 改为动态构建 (GenericPropertyBuilder) -->
+    <ScrollViewer Grid.Row="1" Padding="4">
+      <StackPanel Name="ContentPanel" Spacing="4"/>
+    </ScrollViewer>
+  </Grid>
+</UserControl>

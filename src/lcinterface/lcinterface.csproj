@@ -1,0 +1,42 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <RootNamespace>lcinterface</RootNamespace>
+    <AssemblyName>lcinterface</AssemblyName>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <Nullable>disable</Nullable>
+    <!-- v0.3+ 跨平台: 多目标. net10.0 = 跨平台干净面 (OtoCAD.Avalonia 引用);
+         net10.0-windows7.0 = WinForms 面 (src/OtoCAD 引用). WinForms/GDI+ 接口用 #if WINDOWS 隔离. -->
+    <TargetFramework></TargetFramework>
+    <TargetFrameworks>net10.0;net10.0-windows7.0</TargetFrameworks>
+    <UseWindowsForms Condition="$(TargetFramework.EndsWith('-windows7.0'))">true</UseWindowsForms>
+    <UseWindowsForms Condition="!$(TargetFramework.EndsWith('-windows7.0'))">false</UseWindowsForms>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)'=='Debug'">
+    <DefineConstants>$(DefineConstants);DEBUG;TRACE</DefineConstants>
+    <DebugType>portable</DebugType>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)'=='Release'">
+    <DebugType>none</DebugType>
+    <DebugSymbols>false</DebugSymbols>
+    <DefineConstants>$(DefineConstants);TRACE</DefineConstants>
+  </PropertyGroup>
+
+  <!-- 暂时排除引用 lcdb 的文件 (循环引用问题，需要架构调整) -->
+  <ItemGroup>
+    <Compile Remove="IEntityContainer.cs" />
+    <Compile Remove="IEntityGenerator.cs" />
+    <Compile Remove="EventsAndDelegates.cs" />
+    <Compile Remove="Examples\**\*.cs" />
+  </ItemGroup>
+
+  <!-- Project references -->
+  <ItemGroup>
+    <ProjectReference Include="..\LitMath\LitMath.csproj" />
+    <ProjectReference Include="..\netDxf\netDxf.csproj" />
+  </ItemGroup>
+
+</Project>

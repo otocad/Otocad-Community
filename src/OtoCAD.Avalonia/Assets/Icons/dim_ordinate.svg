@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+  <!-- 坐标标注: 原点 + 引出 -->
+  <g stroke="#1177D7" stroke-width="1.5" fill="none">
+    <line x1="6" y1="26" x2="26" y2="26"/>
+    <line x1="6" y1="26" x2="6" y2="6"/>
+    <line x1="16" y1="26" x2="16" y2="10"/>
+    <line x1="16" y1="10" x2="26" y2="10"/>
+  </g>
+  <circle cx="6" cy="26" r="2" fill="#1177D7"/>
+</svg>

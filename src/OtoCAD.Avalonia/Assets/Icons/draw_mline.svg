@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+  <!-- 多线 -->
+  <g stroke="#0D5DB8" stroke-width="2" fill="none">
+    <polyline points="6,14 12,8 20,12 26,10"/>
+    <polyline points="6,18 12,12 20,16 26,14"/>
+    <polyline points="6,22 12,16 20,20 26,18"/>
+  </g>
+</svg>

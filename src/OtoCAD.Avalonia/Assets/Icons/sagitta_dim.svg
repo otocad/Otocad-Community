@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+  <path d="M3,12 Q8,2 13,12" fill="none" stroke="#333" stroke-width="1"/>
+  <line x1="8" y1="3" x2="8" y2="12" stroke="#cc0000" stroke-width="1"/>
+  <text x="11" y="8" font-size="5" fill="#cc0000">S</text>
+</svg>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+  <!-- 文件夹 -->
+  <path d="M4,8 L4,26 L28,26 L28,10 L16,10 L14,8 Z" fill="none" stroke="#FFB115" stroke-width="2"/>
+  <!-- 导入箭头 -->
+  <g stroke="#1177D7" stroke-width="2" fill="#1177D7">
+    <line x1="16" y1="14" x2="16" y2="22"/>
+    <polygon points="16,22 13,19 19,19"/>
+  </g>
+</svg>

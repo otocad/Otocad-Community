@@ -1,0 +1,79 @@
+<Project>
+  <PropertyGroup>
+    <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+  </PropertyGroup>
+  <ItemGroup>
+    <!-- DevExpress 仅用于已封存的 WinForms 端 (src/OtoCAD + OtoCAD.Tests, 已移出 slnx); go-forward 的 Avalonia 端不使用. -->
+
+    <!-- JSON 和编码 -->
+    <PackageVersion Include="System.Text.Json" Version="10.0.0" />
+    <PackageVersion Include="System.Text.Encodings.Web" Version="10.0.0" />
+
+    <!-- 日志 -->
+    <PackageVersion Include="NLog" Version="6.0.6" />
+    <PackageVersion Include="NLog.Extensions.Logging" Version="6.1.0" />
+
+    <!-- Microsoft Extensions -->
+    <PackageVersion Include="Microsoft.Extensions.Configuration" Version="10.0.0" />
+    <PackageVersion Include="Microsoft.Extensions.Configuration.Abstractions" Version="10.0.0" />
+    <PackageVersion Include="Microsoft.Extensions.Configuration.Binder" Version="10.0.0" />
+    <PackageVersion Include="Microsoft.Extensions.DependencyInjection" Version="10.0.0" />
+    <PackageVersion Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="10.0.0" />
+    <PackageVersion Include="Microsoft.Extensions.Logging" Version="10.0.0" />
+    <PackageVersion Include="Microsoft.Extensions.Logging.Abstractions" Version="10.0.0" />
+    <PackageVersion Include="Microsoft.Extensions.Options" Version="10.0.0" />
+    <PackageVersion Include="Microsoft.Extensions.Primitives" Version="10.0.0" />
+
+    <!-- 压缩 -->
+    <PackageVersion Include="SharpCompress" Version="0.42.0" />
+    <PackageVersion Include="ZstdSharp.Port" Version="0.8.6" />
+
+    <!-- AutoUpdater 相关 -->
+    <PackageVersion Include="Microsoft.Web.WebView2" Version="1.0.3595.46" />
+    <PackageVersion Include="System.Resources.Extensions" Version="10.0.0" />
+    <PackageVersion Include="System.IO.Compression" Version="4.3.0" />
+    <PackageVersion Include="System.Buffers" Version="4.6.1" />
+
+    <!-- 其他依赖 -->
+    <PackageVersion Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageVersion Include="System.Management" Version="10.0.0" />
+
+    <!-- 视觉回归测试 (Story 11-5 spike, 仅 UnitTestProject1 引用,production runtime 0 影响) -->
+    <PackageVersion Include="Tesseract" Version="5.2.0" />
+
+    <!-- Avalonia + SkiaSharp (Phase 1 跨平台 UI 栈, Path B 验证已过) -->
+    <PackageVersion Include="Avalonia" Version="11.2.5" />
+    <PackageVersion Include="Avalonia.Desktop" Version="11.2.5" />
+    <PackageVersion Include="Avalonia.Themes.Fluent" Version="11.2.5" />
+    <PackageVersion Include="Avalonia.Fonts.Inter" Version="11.2.5" />
+    <PackageVersion Include="Avalonia.Diagnostics" Version="11.2.5" />
+    <PackageVersion Include="Avalonia.Svg.Skia" Version="11.2.0.2" />
+    <PackageVersion Include="SkiaSharp" Version="2.88.9" />
+    <!-- 显式覆盖 Avalonia 11.2.5 传递依赖 Tmds.DBus.Protocol 0.20.0 (CVE-2026-39959 高危,
+         GHSA-xrw6-gwf8-vvr9): 钉到 backport 修复版 0.21.3 (同 0.2x 线, drop-in). 仅 Linux/X11 运行时用到. -->
+    <PackageVersion Include="Tmds.DBus.Protocol" Version="0.21.3" />
+
+    <!-- 测试 -->
+    <PackageVersion Include="MSTest.TestAdapter" Version="3.10.0" />
+    <PackageVersion Include="MSTest.TestFramework" Version="3.10.0" />
+    <PackageVersion Include="MSTest.Analyzers" Version="3.10.0" />
+    <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.14.1" />
+    <PackageVersion Include="Microsoft.Testing.Platform" Version="1.6.3" />
+    <PackageVersion Include="Microsoft.Testing.Platform.MSBuild" Version="1.6.3" />
+    <PackageVersion Include="Microsoft.Testing.Extensions.Telemetry" Version="1.6.3" />
+    <PackageVersion Include="Microsoft.Testing.Extensions.TrxReport.Abstractions" Version="1.6.3" />
+    <PackageVersion Include="Microsoft.Testing.Extensions.VSTestBridge" Version="1.6.3" />
+    <PackageVersion Include="Microsoft.TestPlatform.AdapterUtilities" Version="17.14.1" />
+    <PackageVersion Include="Microsoft.TestPlatform.ObjectModel" Version="17.14.1" />
+    <PackageVersion Include="Microsoft.ApplicationInsights" Version="2.23.0" />
+    <PackageVersion Include="System.Memory" Version="4.6.3" />
+    <PackageVersion Include="System.Runtime.CompilerServices.Unsafe" Version="6.1.0" />
+    <PackageVersion Include="System.Threading.Tasks.Extensions" Version="4.6.3" />
+    <PackageVersion Include="System.ValueTuple" Version="4.6.0" />
+    <PackageVersion Include="System.Numerics.Vectors" Version="4.6.0" />
+    <PackageVersion Include="System.Collections.Immutable" Version="10.0.0" />
+    <PackageVersion Include="System.Diagnostics.DiagnosticSource" Version="10.0.0" />
+    <PackageVersion Include="System.IO.Pipelines" Version="10.0.0" />
+    <PackageVersion Include="System.Reflection.Metadata" Version="10.0.0" />
+  </ItemGroup>
+</Project>

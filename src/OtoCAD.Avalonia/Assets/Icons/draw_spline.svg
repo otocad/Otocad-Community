@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+  <!-- 样条曲线 -->
+  <path d="M5,20 Q10,8 16,14 T27,10" fill="none" stroke="#0D5DB8" stroke-width="2"/>
+</svg>

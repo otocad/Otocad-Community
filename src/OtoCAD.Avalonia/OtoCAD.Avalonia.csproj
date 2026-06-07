@@ -1,0 +1,84 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <!-- 覆盖父级 src/Directory.Build.props 中的 WinForms/Windows 设定 -->
+    <!-- v0.3+ 跨平台: net10.0 (平台无关), 引用 lcdb/lcinterface 的 net10.0 面 -->
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <UseWindowsForms>false</UseWindowsForms>
+    <UseWPF>false</UseWPF>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <LangVersion>latest</LangVersion>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
+    <RootNamespace>OtoCAD.Avalonia</RootNamespace>
+    <AssemblyName>OtoCAD.Avalonia</AssemblyName>
+
+    <!-- 元数据 (Phase 2 OSS 发布 + future NuGet 包) -->
+    <!-- 覆盖父级 GenerateAssemblyInfo=false: 本项目无手写 AssemblyInfo.cs,
+         需自动生成版本属性, 否则运行时 Assembly.Version=0.0.0 (About/遥测显示错版本) -->
+    <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
+    <Version>0.4.0</Version>
+    <AssemblyVersion>0.4.0.0</AssemblyVersion>
+    <FileVersion>0.4.0.0</FileVersion>
+    <InformationalVersion>0.4.0-avalonia</InformationalVersion>
+    <Product>OtoCAD Avalonia</Product>
+    <Description>跨平台二维光学 CAD 绘图工具, 80+ 命令 + 内置 AI 客服助手</Description>
+    <Authors>RayPragma</Authors>
+    <Company>RayPragma</Company>
+    <Copyright>Copyright © 2026 RayPragma. MIT License.</Copyright>
+    <PackageProjectUrl>https://github.com/otocad/Otocad-Community</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/otocad/Otocad-Community</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+
+    <!-- 关闭代码分析器(主项目已关, 保持一致) -->
+    <EnableNETAnalyzers>false</EnableNETAnalyzers>
+    <EnforceCodeStyleInBuild>false</EnforceCodeStyleInBuild>
+    <AnalysisLevel>none</AnalysisLevel>
+
+    <!-- 输出目录与主项目共享 src\BuildOutput, 但有独立子目录 -->
+    <BuildOutputRoot>$(MSBuildThisFileDirectory)..\BuildOutput</BuildOutputRoot>
+    <OutputPath Condition="'$(Configuration)' == 'Debug'">$(BuildOutputRoot)\Debug\$(MSBuildProjectName)\</OutputPath>
+    <OutputPath Condition="'$(Configuration)' == 'Release'">$(BuildOutputRoot)\Release\$(MSBuildProjectName)\</OutputPath>
+
+    <!-- 噪音抑制 -->
+    <NoWarn>$(NoWarn);CS8618;CS8602;CS8603;CS8604;NU1510</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- 版本由 src/Directory.Packages.props 集中管理 -->
+    <PackageReference Include="Avalonia" />
+    <PackageReference Include="Avalonia.Desktop" />
+    <PackageReference Include="Avalonia.Themes.Fluent" />
+    <PackageReference Include="Avalonia.Fonts.Inter" />
+    <PackageReference Include="Avalonia.Diagnostics" Condition="'$(Configuration)' == 'Debug'" />
+    <!-- Avalonia 11 内建依赖 SkiaSharp 2.88.x (默认渲染后端).
+         显式引入与 Avalonia 兼容版本以使用 SKCanvas API.
+         注: SkiaSharp.Views.Avalonia 包不存在;
+         自定义绘制需通过 ICustomDrawOperation + ISkiaSharpApiLeaseFeature. -->
+    <PackageReference Include="SkiaSharp" />
+    <!-- SVG 图标渲染 (Ribbon 矢量图标), 复用 Avalonia/SkiaSharp 栈 -->
+    <PackageReference Include="Avalonia.Svg.Skia" />
+    <!-- 安全覆盖: 显式提升 Avalonia 传递依赖 Tmds.DBus.Protocol 至修复版 (见 Directory.Packages.props) -->
+    <PackageReference Include="Tmds.DBus.Protocol" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- 引用现有业务层 (Path B 验证已过, 70% 业务层复用) -->
+    <ProjectReference Include="..\LitMath\LitMath.csproj" />
+    <ProjectReference Include="..\lcinterface\lcinterface.csproj" />
+    <ProjectReference Include="..\lcdb\lcdb.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- 配置文件随输出复制 (Ribbon 布局, 后续可扩展工具配置等) -->
+    <None Update="Config\*.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <!-- Ribbon SVG 矢量图标随输出复制 (IconResolver 按文件路径加载) -->
+    <None Include="Assets\Icons\*.svg" Link="Assets\Icons\%(Filename)%(Extension)">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+</Project>

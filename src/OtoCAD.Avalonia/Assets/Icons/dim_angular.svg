@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+  <!-- 两条线形成角度 -->
+  <line x1="16" y1="16" x2="26" y2="16" stroke="#727272" stroke-width="1"/>
+  <line x1="16" y1="16" x2="22" y2="8" stroke="#727272" stroke-width="1"/>
+  <!-- 角度弧 -->
+  <path d="M 22 16 A 6 6 0 0 0 20.2 10.8" fill="none" stroke="#1177D7" stroke-width="1"/>
+  <!-- 箭头 -->
+  <polygon points="22,16 21,14 23,14" fill="#1177D7"/>
+  <polygon points="20.2,10.8 19,12 18.8,10" fill="#1177D7"/>
+  <!-- 文字 -->
+  <text x="24" y="13" font-family="Arial" font-size="10" text-anchor="middle" fill="#1177D7">45°</text>
+</svg>

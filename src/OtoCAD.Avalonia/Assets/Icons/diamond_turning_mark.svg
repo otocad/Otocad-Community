@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+  <!-- 金刚石车削: 菱形刀尖 + 车削纹 -->
+  <g stroke="#1177D7" stroke-width="2" fill="none">
+    <polygon points="16,5 22,12 16,19 10,12"/>
+    <path d="M7 25 Q16 21 25 25"/>
+  </g>
+</svg>

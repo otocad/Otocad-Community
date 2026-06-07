@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+  <!-- 表面缺陷: 表面 + 麻点/划痕 -->
+  <line x1="4" y1="22" x2="28" y2="22" stroke="#1177D7" stroke-width="2"/>
+  <line x1="11" y1="22" x2="17" y2="12" stroke="#1177D7" stroke-width="1.5"/>
+  <g fill="#1177D7">
+    <circle cx="20" cy="15" r="1.6"/><circle cx="24" cy="18" r="1.1"/>
+  </g>
+</svg>

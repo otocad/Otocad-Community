@@ -1,0 +1,135 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="OtoCAD.Avalonia.Dialogs.LensWizardDialog"
+        Title="新建单透镜"
+        Width="460" Height="600"
+        WindowStartupLocation="CenterOwner"
+        CanResize="False">
+  <Grid RowDefinitions="Auto,*,Auto">
+
+    <Border Grid.Row="0" Background="#E5F1FB" Padding="16,12" BorderBrush="#B8D4EA" BorderThickness="0,0,0,1">
+      <StackPanel>
+        <TextBlock Text="单透镜参数" FontWeight="Bold" FontSize="14"/>
+        <TextBlock Text="填完点确定后,移动鼠标到画布点击放置镜片中心"
+                   FontSize="11" Foreground="#666"/>
+      </StackPanel>
+    </Border>
+
+    <ScrollViewer Grid.Row="1" Padding="16">
+      <StackPanel Spacing="14">
+
+        <!-- 几何 -->
+        <Border BorderBrush="#DDD" BorderThickness="1" Padding="12" CornerRadius="4">
+          <StackPanel Spacing="8">
+            <TextBlock Text="几何 (mm)" FontWeight="SemiBold"/>
+            <Grid ColumnDefinitions="120,*">
+              <TextBlock Grid.Column="0" Text="通光直径:" VerticalAlignment="Center"/>
+              <NumericUpDown Grid.Column="1" Name="DiameterSpin"
+                             Minimum="0.5" Maximum="500" Increment="1" FormatString="F2"/>
+            </Grid>
+            <Grid ColumnDefinitions="120,*">
+              <TextBlock Grid.Column="0" Text="中心厚度:" VerticalAlignment="Center"/>
+              <NumericUpDown Grid.Column="1" Name="ThicknessSpin"
+                             Minimum="0.1" Maximum="100" Increment="0.5" FormatString="F2"/>
+            </Grid>
+          </StackPanel>
+        </Border>
+
+        <!-- 曲率 -->
+        <Border BorderBrush="#DDD" BorderThickness="1" Padding="12" CornerRadius="4">
+          <StackPanel Spacing="8">
+            <TextBlock Text="曲率半径 (mm)" FontWeight="SemiBold"/>
+            <TextBlock Text="正=凸 / 负=凹 / 留空=平面 (∞)"
+                       FontSize="11" Foreground="#888"/>
+
+            <Grid ColumnDefinitions="120,*,80">
+              <TextBlock Grid.Column="0" Text="R1 (前表面):" VerticalAlignment="Center"/>
+              <NumericUpDown Grid.Column="1" Name="R1Spin"
+                             Minimum="-10000" Maximum="10000" Increment="1" FormatString="F2"/>
+              <CheckBox Grid.Column="2" Name="R1FlatCheck" Content="平面" Margin="8,0,0,0"
+                        VerticalAlignment="Center"/>
+            </Grid>
+
+            <Grid ColumnDefinitions="120,*,80">
+              <TextBlock Grid.Column="0" Text="R2 (后表面):" VerticalAlignment="Center"/>
+              <NumericUpDown Grid.Column="1" Name="R2Spin"
+                             Minimum="-10000" Maximum="10000" Increment="1" FormatString="F2"/>
+              <CheckBox Grid.Column="2" Name="R2FlatCheck" Content="平面" Margin="8,0,0,0"
+                        VerticalAlignment="Center"/>
+            </Grid>
+
+            <!-- 非球面 (可选) -->
+            <Expander Header="非球面参数 (可选, Even Asphere)" IsExpanded="False">
+              <StackPanel Spacing="6" Margin="0,6,0,0">
+                <Grid ColumnDefinitions="*,*">
+                  <CheckBox Grid.Column="0" Name="R1AsphericCheck" Content="R1 非球面"/>
+                  <CheckBox Grid.Column="1" Name="R2AsphericCheck" Content="R2 非球面"/>
+                </Grid>
+                <TextBlock Text="圆锥常数 k:  0=球 / -1=抛物 / &lt;-1=双曲 / &gt;0=椭球"
+                           FontSize="11" Foreground="#888"/>
+                <Grid ColumnDefinitions="120,*">
+                  <TextBlock Grid.Column="0" Text="R1 k:" VerticalAlignment="Center"/>
+                  <NumericUpDown Grid.Column="1" Name="R1KSpin"
+                                 Minimum="-100" Maximum="100" Increment="0.1" FormatString="F3"/>
+                </Grid>
+                <Grid ColumnDefinitions="120,*">
+                  <TextBlock Grid.Column="0" Text="R2 k:" VerticalAlignment="Center"/>
+                  <NumericUpDown Grid.Column="1" Name="R2KSpin"
+                                 Minimum="-100" Maximum="100" Increment="0.1" FormatString="F3"/>
+                </Grid>
+                <Grid ColumnDefinitions="120,*">
+                  <TextBlock Grid.Column="0" Text="R1 偶次系数:" VerticalAlignment="Center"/>
+                  <TextBox Grid.Column="1" Name="R1CoeffsText"
+                           Watermark="a4, a6, a8, ... 逗号分隔 (如 1e-5, -2e-9)"/>
+                </Grid>
+                <Grid ColumnDefinitions="120,*">
+                  <TextBlock Grid.Column="0" Text="R2 偶次系数:" VerticalAlignment="Center"/>
+                  <TextBox Grid.Column="1" Name="R2CoeffsText"
+                           Watermark="a4, a6, a8, ... 逗号分隔"/>
+                </Grid>
+              </StackPanel>
+            </Expander>
+
+            <!-- 快捷预设 -->
+            <StackPanel Orientation="Horizontal" Spacing="6">
+              <Button Name="PresetBiconvexBtn" Content="双凸" Padding="8,2"/>
+              <Button Name="PresetBiconcaveBtn" Content="双凹" Padding="8,2"/>
+              <Button Name="PresetPlanoConvexBtn" Content="平凸" Padding="8,2"/>
+              <Button Name="PresetPlanoConcaveBtn" Content="平凹" Padding="8,2"/>
+              <Button Name="PresetMeniscusBtn" Content="弯月" Padding="8,2"/>
+            </StackPanel>
+          </StackPanel>
+        </Border>
+
+        <!-- 材料 -->
+        <Border BorderBrush="#DDD" BorderThickness="1" Padding="12" CornerRadius="4">
+          <StackPanel Spacing="8">
+            <TextBlock Text="材料" FontWeight="SemiBold"/>
+            <Grid ColumnDefinitions="120,*">
+              <TextBlock Grid.Column="0" Text="玻璃牌号:" VerticalAlignment="Center"/>
+              <ComboBox Grid.Column="1" Name="MaterialCombo"/>
+            </Grid>
+            <Grid ColumnDefinitions="120,*">
+              <TextBlock Grid.Column="0" Text="折射率 n_d:" VerticalAlignment="Center"/>
+              <NumericUpDown Grid.Column="1" Name="NdSpin"
+                             Minimum="1.0" Maximum="3.0" Increment="0.001" FormatString="F4"/>
+            </Grid>
+            <Grid ColumnDefinitions="120,*">
+              <TextBlock Grid.Column="0" Text="阿贝数 V_d:" VerticalAlignment="Center"/>
+              <NumericUpDown Grid.Column="1" Name="VdSpin"
+                             Minimum="10" Maximum="100" Increment="0.1" FormatString="F2"/>
+            </Grid>
+          </StackPanel>
+        </Border>
+
+      </StackPanel>
+    </ScrollViewer>
+
+    <Border Grid.Row="2" Background="#F5F5F5" Padding="16,8" BorderBrush="#DDD" BorderThickness="0,1,0,0">
+      <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Spacing="8">
+        <Button Name="OkBtn" Content="确定 (放置)" Width="100" IsDefault="True"/>
+        <Button Name="CancelBtn" Content="取消" Width="80" IsCancel="True"/>
+      </StackPanel>
+    </Border>
+  </Grid>
+</Window>

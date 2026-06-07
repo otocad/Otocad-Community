@@ -1,0 +1,221 @@
+# EditorConfig - OtoCAD去过度设计代码规范
+# https://aka.ms/editorconfigdocs
+
+root = true
+
+# 所有文件基础配置
+[*]
+charset = utf-8
+indent_style = space
+indent_size = 4
+end_of_line = crlf
+trim_trailing_whitespace = true
+insert_final_newline = true
+
+# C# 文件规则
+[*.cs]
+
+###############################
+# .NET 编码约定
+###############################
+
+# 组织 Using
+dotnet_sort_system_directives_first = true
+dotnet_separate_import_directive_groups = false
+
+# this. 和 Me. 首选项
+dotnet_style_qualification_for_field = false:warning
+dotnet_style_qualification_for_property = false:warning
+dotnet_style_qualification_for_method = false:warning
+dotnet_style_qualification_for_event = false:warning
+
+###############################
+# 去过度设计核心规则
+###############################
+
+# CA1501: 避免过度继承
+dotnet_diagnostic.CA1501.severity = error
+dotnet_code_quality.CA1501.additional_inheritance_excluded_symbol_names = T:System.Windows.Forms.*
+
+# CA1502: 避免过度复杂
+dotnet_diagnostic.CA1502.severity = error
+dotnet_code_quality.CA1502.threshold = 10
+
+# CA1505: 避免无法维护的代码
+dotnet_diagnostic.CA1505.severity = error
+
+# CA1506: 避免过度类耦合
+dotnet_diagnostic.CA1506.severity = error
+dotnet_code_quality.CA1506.threshold = 10
+
+# CA1508: 避免死代码
+dotnet_diagnostic.CA1508.severity = error
+
+# CA1509: 初始化代码过长
+dotnet_diagnostic.CA1509.severity = warning
+
+###############################
+# 代码复杂度限制
+###############################
+
+# IDE0001: 简化名称
+dotnet_diagnostic.IDE0001.severity = warning
+
+# IDE0002: 简化成员访问
+dotnet_diagnostic.IDE0002.severity = warning
+
+# IDE0003: 移除this或Me限定
+dotnet_diagnostic.IDE0003.severity = warning
+
+# IDE0004: 移除不必要的转换
+dotnet_diagnostic.IDE0004.severity = warning
+
+# IDE0005: 移除不必要的导入
+dotnet_diagnostic.IDE0005.severity = warning
+
+# IDE0059: 不必要的赋值
+dotnet_diagnostic.IDE0059.severity = warning
+
+# IDE0060: 删除未使用的参数
+dotnet_diagnostic.IDE0060.severity = warning
+
+###############################
+# Manager类限制规则
+###############################
+
+# CA1052: 静态类应该是密封的
+dotnet_diagnostic.CA1052.severity = error
+
+# CA1062: 验证公共方法的参数
+dotnet_diagnostic.CA1062.severity = suggestion
+
+# CA1063: 正确实现IDisposable
+dotnet_diagnostic.CA1063.severity = error
+
+###############################
+# 单例模式限制
+###############################
+
+# CA1810: 不要使用静态构造函数初始化静态字段
+dotnet_diagnostic.CA1810.severity = warning
+
+# CA2211: 非常量字段不应该是可见的
+dotnet_diagnostic.CA2211.severity = error
+
+###############################
+# 命名规则 - 防止过度抽象
+###############################
+
+# 接口必须以I开头
+dotnet_naming_rule.interface_should_be_begins_with_i.severity = error
+dotnet_naming_rule.interface_should_be_begins_with_i.symbols = interface
+dotnet_naming_rule.interface_should_be_begins_with_i.style = begins_with_i
+
+dotnet_naming_symbols.interface.applicable_kinds = interface
+dotnet_naming_symbols.interface.applicable_accessibilities = public, internal, private, protected, protected_internal, private_protected
+
+dotnet_naming_style.begins_with_i.required_prefix = I
+dotnet_naming_style.begins_with_i.capitalization = pascal_case
+
+# 禁止过多的Factory/Manager/Strategy/Handler后缀
+# （通过自定义分析器实现）
+
+###############################
+# 文件大小限制
+###############################
+
+# 文件不应超过300行（自定义规则）
+dotnet_diagnostic.FILE001.severity = error
+
+# 方法不应超过30行（自定义规则）
+dotnet_diagnostic.METHOD001.severity = error
+
+# 类不应有超过10个公共方法（自定义规则）
+dotnet_diagnostic.CLASS001.severity = warning
+
+###############################
+# StyleCop 规则（可选）
+###############################
+
+# SA1101: 前缀局部调用
+dotnet_diagnostic.SA1101.severity = none
+
+# SA1200: Using必须在命名空间内
+dotnet_diagnostic.SA1200.severity = none
+
+# SA1309: 字段名不应以下划线开头
+dotnet_diagnostic.SA1309.severity = none
+
+# SA1600: 元素必须有文档
+dotnet_diagnostic.SA1600.severity = none
+
+# SA1633: 文件必须有头部
+dotnet_diagnostic.SA1633.severity = none
+
+###############################
+# 性能规则
+###############################
+
+# CA1802: 使用文本常量
+dotnet_diagnostic.CA1802.severity = warning
+
+# CA1805: 不要进行不必要的初始化
+dotnet_diagnostic.CA1805.severity = warning
+
+# CA1806: 不要忽略方法结果
+dotnet_diagnostic.CA1806.severity = warning
+
+# CA1814: 使用交错数组而不是多维数组
+dotnet_diagnostic.CA1814.severity = suggestion
+
+# CA1815: 重写值类型的equals和运算符
+dotnet_diagnostic.CA1815.severity = warning
+
+###############################
+# 代码质量规则
+###############################
+
+# CA1000: 不要在泛型类型中声明静态成员
+dotnet_diagnostic.CA1000.severity = warning
+
+# CA1001: 具有可释放字段的类型应该是可释放的
+dotnet_diagnostic.CA1001.severity = error
+
+# CA1010: 集合应该实现泛型接口
+dotnet_diagnostic.CA1010.severity = warning
+
+# CA1031: 不要捕获常规异常类型
+dotnet_diagnostic.CA1031.severity = warning
+
+# CA1032: 实现标准异常构造函数
+dotnet_diagnostic.CA1032.severity = warning
+
+###############################
+# 排除规则（针对特定文件）
+###############################
+
+# 设计器生成的文件
+[*.Designer.cs]
+generated_code = true
+dotnet_diagnostic.CA1501.severity = none
+dotnet_diagnostic.CA1502.severity = none
+dotnet_diagnostic.CA1506.severity = none
+
+# 测试文件
+[*Test.cs]
+dotnet_diagnostic.CA1501.severity = suggestion
+dotnet_diagnostic.CA1502.severity = suggestion
+dotnet_diagnostic.CA1506.severity = suggestion
+
+# 第三方库
+[netDxf/**/*.cs]
+generated_code = true
+dotnet_diagnostic.CA1501.severity = none
+dotnet_diagnostic.CA1502.severity = none
+dotnet_diagnostic.CA1506.severity = none
+
+[LitMath/**/*.cs]
+generated_code = true
+dotnet_diagnostic.CA1501.severity = none
+dotnet_diagnostic.CA1502.severity = none
+dotnet_diagnostic.CA1506.severity = none

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+  <!-- 面形: 弧面 + 基准 -->
+  <g stroke="#1177D7" stroke-width="2" fill="none">
+    <path d="M5 22 Q16 8 27 22"/>
+    <line x1="5" y1="26" x2="27" y2="26"/>
+  </g>
+</svg>

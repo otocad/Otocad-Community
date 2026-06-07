@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+  <!-- 对齐标注线（倾斜） -->
+  <line x1="8" y1="24" x2="24" y2="8" stroke="#1177D7" stroke-width="1"/>
+  <!-- 尺寸界线（垂直于标注线） -->
+  <line x1="5.2" y1="21.2" x2="10.8" y2="26.8" stroke="#1177D7" stroke-width="1"/>
+  <line x1="21.2" y1="5.2" x2="26.8" y2="10.8" stroke="#1177D7" stroke-width="1"/>
+  <!-- 箭头 -->
+  <polygon points="8,24 10,23 9,25" fill="#1177D7"/>
+  <polygon points="24,8 22,9 23,7" fill="#1177D7"/>
+  <!-- 文字（沿倾斜线） -->
+  <text x="16" y="16" font-family="Arial" font-size="10" text-anchor="middle" fill="#1177D7" transform="rotate(-45 16 16)">100</text>
+</svg>

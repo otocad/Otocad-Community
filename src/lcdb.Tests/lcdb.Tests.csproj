@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- 只依赖 lcdb (跨平台 net10.0 面) 的契约层单测项目.
+       刻意不引用 WinForms 的 src/OtoCAD (将封存), 故与 OtoCAD.Tests 分离. -->
+  <PropertyGroup>
+    <!-- 对齐 lcdb 的 WinForms 面 (测试机=Windows). 导入逻辑两面一致, 跨平台面单测可后补. -->
+    <TargetFramework>net10.0-windows7.0</TargetFramework>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <Nullable>disable</Nullable>
+    <IsPackable>false</IsPackable>
+    <IsTestProject>true</IsTestProject>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\lcdb\lcdb.csproj" />
+    <ProjectReference Include="..\LitMath\LitMath.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MSTest.TestAdapter" />
+    <PackageReference Include="MSTest.TestFramework" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+  </ItemGroup>
+  <!-- 渲染测试 (ConcaveProbeTests) 不需要夹具; 导入夹具已随导入测试移到 OtoCAD.Cloud.Tests. -->
+
+</Project>
