@@ -1,0 +1,52 @@
+{
+  "name": "iso-lens",
+  "title": "ISO 10110 单透镜图框 (A4 纵)",
+  "note": "硬编码 IsoLensDrawingFrame 的数据驱动预设 (模板系统 Phase 2b 金样对齐后替换旧类). 底部自下而上: NOTES → 标题栏 7 格 → 三列表 SURFACE 1 | MATERIAL | SURFACE 2. 各行代号沿用既有 ISO 图纸生成器 (IsoSingleLensSheet) 的行: 3/ 面形 · 4/ 中心偏差 · 5/ 表面疵病 · 0/ 应力双折射 · 1/ 气泡 · 2/ 不均匀性 (ISO 10110-5/6/7/2/3/4); 数值为占位, 出图时由零件真值覆盖.",
+  "paper": "A4P",
+  "border": { "margin": 8 },
+  "bands": [
+    {
+      "kind": "notes", "height": 12,
+      "fields": [
+        { "key": "Notes", "label": "NOTES" },
+        { "key": "GeneralTol", "width": 52, "default": "DIM. IN mm\nGENERAL TOL. PER ISO 10110-11" }
+      ]
+    },
+    {
+      "kind": "title-grid", "height": 16, "rows": 1, "cols": 100,
+      "cells": [
+        { "key": "ProjectPart", "label": "PROJECT  /  PART NUMBER", "col": 0, "w": 30, "textHeight": 3.2, "bagKeys": [ "DrawingTitle", "name" ] },
+        { "key": "DrawnBy", "label": "DRAWN BY", "col": 30, "w": 16, "bagKeys": [ "Designer", "designer" ] },
+        { "key": "ApprovedBy", "label": "APPROVED", "col": 46, "w": 13, "default": "—", "bagKeys": [ "reviewer", "approver" ] },
+        { "key": "DrawDate", "label": "DATE", "col": 59, "w": 16, "bagKeys": [ "DesignDate" ] },
+        { "key": "DrawScale", "label": "SCALE", "col": 75, "w": 10, "default": "1:1", "bagKeys": [ "scale", "Scale" ] },
+        { "key": "Sheet", "label": "SHEET", "col": 85, "w": 8, "default": "1 / 1", "bagKeys": [ "sheet" ] },
+        { "key": "Rev", "label": "REV", "col": 93, "w": 7, "default": "A" }
+      ]
+    },
+    {
+      "kind": "spec-table", "rowHeight": 6,
+      "columns": [
+        {
+          "title": "SURFACE 1  (FRONT)",
+          "seed": [ "R = +90.000 +0.5/-0.5 CX", "Øe 62.00 +0/-0.5", "Chamfer 0.3-0.8 × 45°", "3/ (0.5/0.25)", "4/ 0.5'", "5/ 2×0.04; L1×0.001; E0.5", "7/ AR 400-700 nm, R<0.5%" ],
+          "seedKeys": [ "radius_front", "clear_aperture_front", "chamfer_front", "form_front", "centering_front", "imperfection_front", "coating_front" ]
+        },
+        {
+          "title": "MATERIAL",
+          "seed": [ "N-BK7", "n_d = 1.5168", "v_d = 64.17", "0/ 10", "1/ 1×0.16", "2/ 2; A" ],
+          "seedKeys": [ "material_name", "n_d", "v_d", "birefringence", "bubble", "inhomogeneity" ]
+        },
+        {
+          "title": "SURFACE 2  (REAR)",
+          "seed": [ "R = ∞", "Øe 62.00 +0/-0.5", "Chamfer 0.3-0.8 × 45°", "3/ (1.0)", "4/ 0.5'", "5/ 2×0.063; C1×0.016", "7/ AR 400-700 nm, R<0.5%" ],
+          "seedKeys": [ "radius_back", "clear_aperture_back", "chamfer_back", "form_back", "centering_back", "imperfection_back", "coating_back" ]
+        }
+      ]
+    }
+  ],
+  "furniture": [
+    { "kind": "projection-symbol", "angle": "first", "at": "notes-right" }
+  ],
+  "style": { "cellTextHeight": 2.5, "headerTextHeight": 2.5, "labelTextHeight": 1.7, "valueTextHeight": 2.8, "lineWeight": 0.25 }
+}

@@ -1,0 +1,51 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:cl="using:OtoCAD.Avalonia.Checklist"
+             x:Class="OtoCAD.Avalonia.Checklist.ChecklistPanelControl"
+             MinWidth="240">
+  <Border BorderBrush="#E0E0E0" BorderThickness="0,1,0,0" Background="#FAFAFA">
+    <Grid RowDefinitions="Auto,Auto,*" Margin="8,6">
+      <!-- 头部: 标题 + 摘要徽章 + 操作 -->
+      <Grid Grid.Row="0" ColumnDefinitions="*,Auto">
+        <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
+          <TextBlock Text="出图清单" FontWeight="Bold" FontSize="13" VerticalAlignment="Center"/>
+          <Border Name="SummaryBadge" CornerRadius="3" Padding="6,1" VerticalAlignment="Center">
+            <TextBlock Name="SummaryText" FontSize="11" Foreground="White"/>
+          </Border>
+        </StackPanel>
+        <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="4">
+          <Button Name="RefreshBtn" Content="刷新" FontSize="11" Padding="6,2" ToolTip.Tip="重新检查当前图纸"/>
+          <Button Name="RegenAllBtn" Content="一键重出" FontSize="11" Padding="6,2"
+                  Background="#1565C0" Foreground="White"
+                  ToolTip.Tip="重建所有可自动修复的未通过项"/>
+        </StackPanel>
+      </Grid>
+
+      <TextBlock Grid.Row="1" Name="EmptyHint" Margin="0,8" FontSize="11" Foreground="#888"
+                 Text="未加载清单 (Config/Checklists/*.yaml)" IsVisible="False"/>
+
+      <!-- 清单项 -->
+      <ScrollViewer Grid.Row="2" Margin="0,6,0,0">
+        <ItemsControl Name="ItemsHost">
+          <ItemsControl.ItemTemplate>
+            <DataTemplate x:DataType="cl:ChecklistRow">
+              <Grid ColumnDefinitions="Auto,*,Auto" Margin="0,3">
+                <TextBlock Grid.Column="0" Text="{Binding Glyph}" Foreground="{Binding GlyphBrush}"
+                           FontWeight="Bold" FontSize="14" Width="18" VerticalAlignment="Top"/>
+                <StackPanel Grid.Column="1" Spacing="0">
+                  <TextBlock Text="{Binding Label}" FontSize="12" TextWrapping="Wrap"/>
+                  <TextBlock Text="{Binding Detail}" FontSize="10" Foreground="#999" TextWrapping="Wrap"/>
+                </StackPanel>
+                <Button Grid.Column="2" Content="重出" FontSize="10" Padding="5,1"
+                        VerticalAlignment="Top"
+                        IsVisible="{Binding CanRegen}"
+                        Tag="{Binding Regen}"
+                        Click="OnItemRegenClick"/>
+              </Grid>
+            </DataTemplate>
+          </ItemsControl.ItemTemplate>
+        </ItemsControl>
+      </ScrollViewer>
+    </Grid>
+  </Border>
+</UserControl>

@@ -1,0 +1,69 @@
+{
+  "name": "gb-lens",
+  "title": "GB 光学零件图框 (中文, A4 纵)",
+  "note": "硬编码 GbLensDrawingFrame 的数据驱动预设 (对标 docs/需求/图面样例-单透镜2.png; Phase 2b 金样对齐后替换旧类). 自底向上: GB/T 10609.1 标题栏 (左: 更改记录表头 + 设计/标准化/审核/工艺 签字区; 右: 单位 · 阶段标记/重量/比例 · 图样名称 · 图样代号 · 张次) → 三列表 (左表面 | 材料技术要求 | 右表面) → 注 (无盒). 右上 '其余' 粗糙度. 标题栏网格 20 行 × 100 列: 左块行高 = 40/5, 右块行高 = 40/4. 命名字段键与 GbSheetScene 属性包 title 簇同名 (unit/name/product_number/scale/sheet/designer/std_check/reviewer/process/stage/weight/general_roughness), 列行键与 GbLensSheet 材料/表面簇同名. 属性区代号: 3/ 面形 · 5/ 表面疵病 · C 中心偏差 · ΔR 样板精度 · G/P 表面结构 (GB/T 13323-2009 §2, ISO 10110); 0/ 1/ 2/ 材料 (GB/T 7962). 数值为占位.",
+  "paper": "A4P",
+  "border": { "margin": 8 },
+  "bands": [
+    {
+      "kind": "title-grid", "height": 40, "rows": 20, "cols": 100,
+      "cells": [
+        { "label": "标记", "col": 0, "w": 7, "row": 0, "h": 4, "align": "center" },
+        { "label": "处数", "col": 7, "w": 7, "row": 0, "h": 4, "align": "center" },
+        { "label": "分区", "col": 14, "w": 7, "row": 0, "h": 4, "align": "center" },
+        { "label": "更改文件号", "col": 21, "w": 17, "row": 0, "h": 4, "align": "center" },
+        { "label": "签名", "col": 38, "w": 12, "row": 0, "h": 4, "align": "center" },
+        { "label": "年月日", "col": 50, "w": 12, "row": 0, "h": 4, "align": "center" },
+
+        { "label": "设计", "col": 0, "w": 10, "row": 4, "h": 4 },
+        { "key": "designer", "col": 10, "w": 12, "row": 4, "h": 4, "textHeight": 2.0, "bagKeys": [ "Designer" ] },
+        { "col": 22, "w": 40, "row": 4, "h": 4 },
+        { "label": "标准化", "col": 0, "w": 10, "row": 8, "h": 4 },
+        { "key": "std_check", "col": 10, "w": 12, "row": 8, "h": 4, "textHeight": 2.0 },
+        { "col": 22, "w": 40, "row": 8, "h": 4 },
+        { "label": "审核", "col": 0, "w": 10, "row": 12, "h": 4 },
+        { "key": "reviewer", "col": 10, "w": 12, "row": 12, "h": 4, "textHeight": 2.0 },
+        { "col": 22, "w": 40, "row": 12, "h": 4 },
+        { "label": "工艺", "col": 0, "w": 10, "row": 16, "h": 4 },
+        { "key": "process", "col": 10, "w": 12, "row": 16, "h": 4, "textHeight": 2.0 },
+        { "col": 22, "w": 40, "row": 16, "h": 4 },
+
+        { "key": "unit", "col": 62, "w": 38, "row": 0, "h": 5, "align": "center", "textHeight": 2.8, "default": "(单位名称)" },
+        { "key": "stage", "label": "阶段标记", "col": 62, "w": 15, "row": 5, "h": 5, "textHeight": 2.2 },
+        { "key": "weight", "label": "重量", "col": 77, "w": 11, "row": 5, "h": 5, "textHeight": 2.2 },
+        { "key": "scale", "label": "比例", "col": 88, "w": 12, "row": 5, "h": 5, "textHeight": 2.4, "default": "1:1", "bagKeys": [ "Scale" ] },
+        { "key": "name", "col": 62, "w": 38, "row": 10, "h": 5, "align": "center", "textHeight": 4.0, "default": "透镜", "bagKeys": [ "DrawingTitle" ] },
+        { "key": "product_number", "col": 62, "w": 38, "row": 15, "h": 3, "align": "center", "textHeight": 2.6, "default": "(图样代号)", "bagKeys": [ "DrawingNumber", "drawing_number" ] },
+        { "key": "sheet", "col": 62, "w": 38, "row": 18, "h": 2, "align": "center", "textHeight": 1.9, "default": "共 1 张   第 1 张" }
+      ]
+    },
+    {
+      "kind": "spec-table", "rowHeight": 6,
+      "columns": [
+        {
+          "title": "左表面",
+          "seed": [ "3/3(0.5)", "5/3×0.1", "C=3'", "ΔR=A", "P3" ],
+          "seedKeys": [ "form_error_left", "surface_imperf_left", "centering_tol_left", "sample_grade_left", "surface_texture_left" ]
+        },
+        {
+          "title": "材料技术要求",
+          "seed": [ "N-BK7", "n_d 1.5168", "v_d 64.17", "0/20", "1/3×0.16", "2/2;2" ],
+          "seedKeys": [ "material_name", "n_d", "v_d", "birefringence", "bubble", "inhomogeneity" ]
+        },
+        {
+          "title": "右表面",
+          "seed": [ "3/3(0.5)", "5/3×0.1", "C=3'", "ΔR=A", "P3" ],
+          "seedKeys": [ "form_error_right", "surface_imperf_right", "centering_tol_right", "sample_grade_right", "surface_texture_right" ]
+        }
+      ]
+    },
+    {
+      "kind": "notes", "height": 14, "box": false,
+      "fields": [ { "key": "notes" } ]
+    }
+  ],
+  "furniture": [
+    { "kind": "general-roughness", "at": "top-right", "key": "general_roughness", "label": "其余", "default": "Ra 1" }
+  ],
+  "style": { "cellTextHeight": 2.5, "headerTextHeight": 2.6, "labelTextHeight": 1.7, "valueTextHeight": 2.2, "lineWeight": 0.25 }
+}

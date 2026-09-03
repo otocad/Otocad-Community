@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+  <!-- 标注线 -->
+  <line x1="6" y1="20" x2="26" y2="20" stroke="#1177D7" stroke-width="1"/>
+  <!-- 尺寸界线 -->
+  <line x1="6" y1="16" x2="6" y2="24" stroke="#1177D7" stroke-width="1"/>
+  <line x1="26" y1="16" x2="26" y2="24" stroke="#1177D7" stroke-width="1"/>
+  <!-- 箭头 -->
+  <polygon points="6,20 9,19 9,21" fill="#1177D7"/>
+  <polygon points="26,20 23,19 23,21" fill="#1177D7"/>
+  <!-- 文字 -->
+  <text x="16" y="18" font-family="Arial" font-size="10" text-anchor="middle" fill="#1177D7">100</text>
+</svg>

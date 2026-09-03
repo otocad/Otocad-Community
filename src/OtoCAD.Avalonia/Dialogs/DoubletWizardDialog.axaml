@@ -1,0 +1,108 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="OtoCAD.Avalonia.Dialogs.DoubletWizardDialog"
+        Title="新建双胶合透镜"
+        Width="480" Height="640"
+        WindowStartupLocation="CenterOwner"
+        CanResize="False">
+  <Grid RowDefinitions="Auto,*,Auto">
+
+    <Border Grid.Row="0" Background="#E5F1FB" Padding="16,12" BorderBrush="#B8D4EA" BorderThickness="0,0,0,1">
+      <StackPanel>
+        <TextBlock Text="双胶合透镜 (Cemented Doublet)" FontWeight="Bold" FontSize="14"/>
+        <TextBlock Text="2 片镜片胶合, 共享中间表面 (无空气间隙). 最常用: 消色差透镜 (Crown + Flint)."
+                   FontSize="11" Foreground="#666" TextWrapping="Wrap"/>
+      </StackPanel>
+    </Border>
+
+    <ScrollViewer Grid.Row="1" Padding="16">
+      <StackPanel Spacing="14">
+
+        <!-- 预设 -->
+        <Border BorderBrush="#DDD" BorderThickness="1" Padding="12" CornerRadius="4">
+          <StackPanel Spacing="8">
+            <TextBlock Text="快速预设" FontWeight="SemiBold"/>
+            <StackPanel Orientation="Horizontal" Spacing="6">
+              <Button Name="PresetAchromatBtn"  Content="消色差 (N-BK7+F2)" Padding="8,2"/>
+              <Button Name="PresetMeniscusBtn"  Content="弯月" Padding="8,2"/>
+              <Button Name="PresetCustomBtn"    Content="重置" Padding="8,2"/>
+            </StackPanel>
+          </StackPanel>
+        </Border>
+
+        <!-- 几何 -->
+        <Border BorderBrush="#DDD" BorderThickness="1" Padding="12" CornerRadius="4">
+          <StackPanel Spacing="8">
+            <TextBlock Text="几何 (mm)" FontWeight="SemiBold"/>
+            <Grid ColumnDefinitions="120,*">
+              <TextBlock Grid.Column="0" Text="通光直径:" VerticalAlignment="Center"/>
+              <NumericUpDown Grid.Column="1" Name="DiameterSpin"
+                             Minimum="0.5" Maximum="500" Increment="1" FormatString="F2"/>
+            </Grid>
+            <Grid ColumnDefinitions="120,*">
+              <TextBlock Grid.Column="0" Text="片 1 厚度 T1:" VerticalAlignment="Center"/>
+              <NumericUpDown Grid.Column="1" Name="T1Spin"
+                             Minimum="0.1" Maximum="100" Increment="0.5" FormatString="F2"/>
+            </Grid>
+            <Grid ColumnDefinitions="120,*">
+              <TextBlock Grid.Column="0" Text="片 2 厚度 T2:" VerticalAlignment="Center"/>
+              <NumericUpDown Grid.Column="1" Name="T2Spin"
+                             Minimum="0.1" Maximum="100" Increment="0.5" FormatString="F2"/>
+            </Grid>
+          </StackPanel>
+        </Border>
+
+        <!-- 曲率 -->
+        <Border BorderBrush="#DDD" BorderThickness="1" Padding="12" CornerRadius="4">
+          <StackPanel Spacing="8">
+            <TextBlock Text="曲率半径 (mm)" FontWeight="SemiBold"/>
+            <TextBlock Text="正=凸 / 负=凹 / 留空=平面 (∞)" FontSize="11" Foreground="#888"/>
+            <Grid ColumnDefinitions="120,*,80">
+              <TextBlock Grid.Column="0" Text="R1 (前):" VerticalAlignment="Center"/>
+              <NumericUpDown Grid.Column="1" Name="R1Spin"
+                             Minimum="-10000" Maximum="10000" Increment="1" FormatString="F2"/>
+              <CheckBox Grid.Column="2" Name="R1FlatCheck" Content="平面" Margin="8,0,0,0" VerticalAlignment="Center"/>
+            </Grid>
+            <Grid ColumnDefinitions="120,*,80">
+              <TextBlock Grid.Column="0" Text="RC (胶合面):" VerticalAlignment="Center"/>
+              <NumericUpDown Grid.Column="1" Name="RcSpin"
+                             Minimum="-10000" Maximum="10000" Increment="1" FormatString="F2"/>
+              <CheckBox Grid.Column="2" Name="RcFlatCheck" Content="平面" Margin="8,0,0,0" VerticalAlignment="Center"/>
+            </Grid>
+            <Grid ColumnDefinitions="120,*,80">
+              <TextBlock Grid.Column="0" Text="R3 (后):" VerticalAlignment="Center"/>
+              <NumericUpDown Grid.Column="1" Name="R3Spin"
+                             Minimum="-10000" Maximum="10000" Increment="1" FormatString="F2"/>
+              <CheckBox Grid.Column="2" Name="R3FlatCheck" Content="平面" Margin="8,0,0,0" VerticalAlignment="Center"/>
+            </Grid>
+          </StackPanel>
+        </Border>
+
+        <!-- 材料 -->
+        <Border BorderBrush="#DDD" BorderThickness="1" Padding="12" CornerRadius="4">
+          <StackPanel Spacing="8">
+            <TextBlock Text="材料" FontWeight="SemiBold"/>
+            <Grid ColumnDefinitions="120,*">
+              <TextBlock Grid.Column="0" Text="片 1 (前):" VerticalAlignment="Center"/>
+              <ComboBox Grid.Column="1" Name="Material1Combo"/>
+            </Grid>
+            <Grid ColumnDefinitions="120,*">
+              <TextBlock Grid.Column="0" Text="片 2 (后):" VerticalAlignment="Center"/>
+              <ComboBox Grid.Column="1" Name="Material2Combo"/>
+            </Grid>
+            <TextBlock Text="消色差通常: 冠玻璃 (低色散, 如 N-BK7) + 火石玻璃 (高色散, 如 F2)"
+                       FontSize="11" Foreground="#888" TextWrapping="Wrap"/>
+          </StackPanel>
+        </Border>
+
+      </StackPanel>
+    </ScrollViewer>
+
+    <Border Grid.Row="2" Background="#F5F5F5" Padding="16,8" BorderBrush="#DDD" BorderThickness="0,1,0,0">
+      <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Spacing="8">
+        <Button Name="OkBtn" Content="确定 (放置)" Width="100" IsDefault="True"/>
+        <Button Name="CancelBtn" Content="取消" Width="80" IsCancel="True"/>
+      </StackPanel>
+    </Border>
+  </Grid>
+</Window>

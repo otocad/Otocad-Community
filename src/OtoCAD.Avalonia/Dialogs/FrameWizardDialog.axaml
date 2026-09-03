@@ -1,0 +1,86 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="OtoCAD.Avalonia.Dialogs.FrameWizardDialog"
+        x:CompileBindings="False"
+        Title="新建图框"
+        Width="520" Height="600"
+        WindowStartupLocation="CenterOwner"
+        CanResize="False">
+  <Grid RowDefinitions="Auto,*,Auto">
+
+    <Border Grid.Row="0" Background="#E5F1FB" Padding="16,12" BorderBrush="#B8D4EA" BorderThickness="0,0,0,1">
+      <StackPanel>
+        <TextBlock Text="工程图图框 (GB/T 14689)" FontWeight="Bold" FontSize="14"/>
+        <TextBlock Text="选纸张规格 + 方向 + 填标题栏; 确定后在画布点击左下角放置位置."
+                   FontSize="11" Foreground="#666" TextWrapping="Wrap"/>
+      </StackPanel>
+    </Border>
+
+    <ScrollViewer Grid.Row="1" Padding="16">
+      <StackPanel Spacing="12">
+
+        <Border BorderBrush="#DDD" BorderThickness="1" Padding="12" CornerRadius="4">
+          <StackPanel Spacing="6">
+            <Grid ColumnDefinitions="110,*">
+              <TextBlock Grid.Column="0" Text="纸张规格" VerticalAlignment="Center"/>
+              <ComboBox Grid.Column="1" Name="PaperCombo" SelectedIndex="3" HorizontalAlignment="Stretch">
+                <ComboBoxItem>A0 横向 (1189×841)</ComboBoxItem>
+                <ComboBoxItem>A1 横向 (841×594)</ComboBoxItem>
+                <ComboBoxItem>A2 横向 (594×420)</ComboBoxItem>
+                <ComboBoxItem>A3 横向 (420×297)</ComboBoxItem>
+                <ComboBoxItem>A4 横向 (297×210)</ComboBoxItem>
+                <ComboBoxItem>A0 纵向 (841×1189)</ComboBoxItem>
+                <ComboBoxItem>A1 纵向 (594×841)</ComboBoxItem>
+                <ComboBoxItem>A2 纵向 (420×594)</ComboBoxItem>
+                <ComboBoxItem>A3 纵向 (297×420)</ComboBoxItem>
+                <ComboBoxItem>A4 纵向 (210×297)</ComboBoxItem>
+              </ComboBox>
+            </Grid>
+            <CheckBox Name="TitleBlockCheck" Content="包含标题栏 (右下角)" IsChecked="True"/>
+          </StackPanel>
+        </Border>
+
+        <Border BorderBrush="#DDD" BorderThickness="1" Padding="12" CornerRadius="4">
+          <StackPanel Spacing="6">
+            <TextBlock Text="标题栏字段" FontWeight="SemiBold"/>
+            <Grid ColumnDefinitions="80,*,80,*" RowDefinitions="Auto,Auto,Auto,Auto">
+              <TextBlock Grid.Row="0" Grid.Column="0" Text="项目" VerticalAlignment="Center" Margin="0,4"/>
+              <TextBox    Grid.Row="0" Grid.Column="1" Name="ProjectBox" Margin="0,2,6,2"/>
+              <TextBlock Grid.Row="0" Grid.Column="2" Text="公司" VerticalAlignment="Center" Margin="0,4"/>
+              <TextBox    Grid.Row="0" Grid.Column="3" Name="CompanyBox" Margin="0,2"/>
+
+              <TextBlock Grid.Row="1" Grid.Column="0" Text="图号" VerticalAlignment="Center" Margin="0,4"/>
+              <TextBox    Grid.Row="1" Grid.Column="1" Name="DrawingNumberBox" Margin="0,2,6,2"/>
+              <TextBlock Grid.Row="1" Grid.Column="2" Text="标题" VerticalAlignment="Center" Margin="0,4"/>
+              <TextBox    Grid.Row="1" Grid.Column="3" Name="TitleBox" Margin="0,2"/>
+
+              <TextBlock Grid.Row="2" Grid.Column="0" Text="设计" VerticalAlignment="Center" Margin="0,4"/>
+              <TextBox    Grid.Row="2" Grid.Column="1" Name="DesignerBox" Margin="0,2,6,2"/>
+              <TextBlock Grid.Row="2" Grid.Column="2" Text="日期" VerticalAlignment="Center" Margin="0,4"/>
+              <TextBox    Grid.Row="2" Grid.Column="3" Name="DateBox" Margin="0,2"/>
+
+              <TextBlock Grid.Row="3" Grid.Column="0" Text="材料" VerticalAlignment="Center" Margin="0,4"/>
+              <TextBox    Grid.Row="3" Grid.Column="1" Name="MaterialBox" Margin="0,2,6,2"/>
+              <TextBlock Grid.Row="3" Grid.Column="2" Text="比例" VerticalAlignment="Center" Margin="0,4"/>
+              <TextBox    Grid.Row="3" Grid.Column="3" Name="ScaleBox" Text="1:1" Margin="0,2"/>
+            </Grid>
+          </StackPanel>
+        </Border>
+
+        <Border BorderBrush="#F0AD4E" BorderThickness="1" Background="#FFF8E5" Padding="10" CornerRadius="4">
+          <TextBlock TextWrapping="Wrap" FontSize="11" Foreground="#996600">
+            ℹ 图框创建后会归到 "图框" 图层 + 默认锁定 — 防止误编辑.
+            需修改时在图层管理里解锁该图层.
+          </TextBlock>
+        </Border>
+      </StackPanel>
+    </ScrollViewer>
+
+    <Border Grid.Row="2" Background="#F5F5F5" Padding="16,8" BorderBrush="#DDD" BorderThickness="0,1,0,0">
+      <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Spacing="8">
+        <Button Name="OkBtn" Content="确定 (放置)" Width="100" IsDefault="True"/>
+        <Button Name="CancelBtn" Content="取消" Width="80" IsCancel="True"/>
+      </StackPanel>
+    </Border>
+  </Grid>
+</Window>

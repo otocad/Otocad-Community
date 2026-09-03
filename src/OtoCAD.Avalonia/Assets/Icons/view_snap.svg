@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128px" height="128px">
+  <defs>
+    <linearGradient id="snap-gradient1" gradientUnits="userSpaceOnUse">
+      <stop style="stop-color: #4b70f5;"/>
+    </linearGradient>
+    <linearGradient id="snap-gradient2" gradientUnits="userSpaceOnUse">
+      <stop style="stop-color: #3dc2ec;"/>
+    </linearGradient>
+  </defs>
+  <!-- 磁铁形状 -->
+  <path d="M 30 50 L 30 35 Q 30 20, 45 20 L 55 20 Q 70 20, 70 35 L 70 50 L 60 50 L 60 35 Q 60 30, 55 30 L 45 30 Q 40 30, 40 35 L 40 50 Z" 
+        fill="url(#snap-gradient1)"/>
+  <rect x="25" y="50" width="20" height="25" fill="url(#snap-gradient1)"/>
+  <rect x="55" y="50" width="20" height="25" fill="url(#snap-gradient1)"/>
+  <!-- 吸附点 -->
+  <circle cx="85" cy="85" r="8" fill="url(#snap-gradient2)"/>
+  <line x1="70" y1="70" x2="78" y2="78" stroke="url(#snap-gradient2)" stroke-width="3" stroke-linecap="round"/>
+  <line x1="92" y1="92" x2="100" y2="100" stroke="url(#snap-gradient2)" stroke-width="3" stroke-linecap="round"/>
+</svg>

@@ -1,0 +1,357 @@
+{
+  "version": 1.0,
+  "name": null,
+  "aperture": {
+    "type": "EPD",
+    "value": 10
+  },
+  "fields": {
+    "fields": [
+      {
+        "x": 0.0,
+        "y": 0,
+        "vx": 0.0,
+        "vy": 0.0,
+        "weight": 1.0
+      },
+      {
+        "x": 0.0,
+        "y": 14,
+        "vx": 0.0,
+        "vy": 0.0,
+        "weight": 1.0
+      },
+      {
+        "x": 0.0,
+        "y": 20,
+        "vx": 0.0,
+        "vy": 0.0,
+        "weight": 1.0
+      }
+    ],
+    "telecentric": false,
+    "field_definition": {
+      "field_type": "AngleField"
+    }
+  },
+  "wavelengths": {
+    "wavelengths": [
+      {
+        "value": 0.48,
+        "is_primary": false,
+        "unit": "um",
+        "weight": 1.0
+      },
+      {
+        "value": 0.55,
+        "is_primary": true,
+        "unit": "um",
+        "weight": 1.0
+      },
+      {
+        "value": 0.65,
+        "is_primary": false,
+        "unit": "um",
+        "weight": 1.0
+      }
+    ],
+    "polarization": "ignore"
+  },
+  "apodization": null,
+  "pickups": [],
+  "solves": {
+    "solves": []
+  },
+  "surface_group": {
+    "surfaces": [
+      {
+        "type": "ObjectSurface",
+        "geometry": {
+          "type": "Plane",
+          "cs": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": null,
+            "rx": 0.0,
+            "ry": 0.0,
+            "rz": 0.0,
+            "reference_cs": null
+          },
+          "radius": null
+        },
+        "material_post": {
+          "type": "IdealMaterial",
+          "propagation_model": {
+            "class": "HomogeneousPropagation"
+          },
+          "index": 1.0,
+          "absorp": 0.0
+        },
+        "comment": ""
+      },
+      {
+        "type": "Surface",
+        "thickness": 3.25896,
+        "geometry": {
+          "type": "StandardGeometry",
+          "cs": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0,
+            "rx": 0.0,
+            "ry": 0.0,
+            "rz": 0.0,
+            "reference_cs": null
+          },
+          "radius": 22.01359,
+          "conic": 0.0
+        },
+        "material_post": {
+          "type": "Material",
+          "propagation_model": {
+            "class": "HomogeneousPropagation"
+          },
+          "filename": "D:\\Documents\\Documents\\Repo\\OpticChat\\optiland\\optiland\\database\\data-nk\\glass\\hikari\\SK16.yml",
+          "name": "SK16",
+          "reference": null,
+          "robust_search": true,
+          "min_wavelength": null,
+          "max_wavelength": null
+        },
+        "is_stop": false,
+        "aperture": null,
+        "comment": "",
+        "interaction_model": {
+          "type": "RefractiveReflectiveModel",
+          "is_reflective": false,
+          "coating": null,
+          "bsdf": null
+        }
+      },
+      {
+        "type": "Surface",
+        "thickness": 6.00755,
+        "geometry": {
+          "type": "StandardGeometry",
+          "cs": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 3.25896,
+            "rx": 0.0,
+            "ry": 0.0,
+            "rz": 0.0,
+            "reference_cs": null
+          },
+          "radius": -435.76044,
+          "conic": 0.0
+        },
+        "material_post": {
+          "type": "IdealMaterial",
+          "propagation_model": {
+            "class": "HomogeneousPropagation"
+          },
+          "index": 1.0,
+          "absorp": 0.0
+        },
+        "is_stop": false,
+        "aperture": null,
+        "comment": "",
+        "interaction_model": {
+          "type": "RefractiveReflectiveModel",
+          "is_reflective": false,
+          "coating": null,
+          "bsdf": null
+        }
+      },
+      {
+        "type": "Surface",
+        "thickness": 0.99997,
+        "geometry": {
+          "type": "StandardGeometry",
+          "cs": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 9.26651,
+            "rx": 0.0,
+            "ry": 0.0,
+            "rz": 0.0,
+            "reference_cs": null
+          },
+          "radius": -22.21328,
+          "conic": 0.0
+        },
+        "material_post": {
+          "type": "Material",
+          "propagation_model": {
+            "class": "HomogeneousPropagation"
+          },
+          "filename": "D:\\Documents\\Documents\\Repo\\OpticChat\\optiland\\optiland\\database\\data-nk\\glass\\schott\\F2.yml",
+          "name": "F2",
+          "reference": "schott",
+          "robust_search": true,
+          "min_wavelength": null,
+          "max_wavelength": null
+        },
+        "is_stop": false,
+        "aperture": null,
+        "comment": "",
+        "interaction_model": {
+          "type": "RefractiveReflectiveModel",
+          "is_reflective": false,
+          "coating": null,
+          "bsdf": null
+        }
+      },
+      {
+        "type": "Surface",
+        "thickness": 4.75041,
+        "geometry": {
+          "type": "StandardGeometry",
+          "cs": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 10.26648,
+            "rx": 0.0,
+            "ry": 0.0,
+            "rz": 0.0,
+            "reference_cs": null
+          },
+          "radius": 20.29192,
+          "conic": 0.0
+        },
+        "material_post": {
+          "type": "IdealMaterial",
+          "propagation_model": {
+            "class": "HomogeneousPropagation"
+          },
+          "index": 1.0,
+          "absorp": 0.0
+        },
+        "is_stop": true,
+        "aperture": null,
+        "comment": "",
+        "interaction_model": {
+          "type": "RefractiveReflectiveModel",
+          "is_reflective": false,
+          "coating": null,
+          "bsdf": null
+        }
+      },
+      {
+        "type": "Surface",
+        "thickness": 2.95208,
+        "geometry": {
+          "type": "StandardGeometry",
+          "cs": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 15.01689,
+            "rx": 0.0,
+            "ry": 0.0,
+            "rz": 0.0,
+            "reference_cs": null
+          },
+          "radius": 79.6836,
+          "conic": 0.0
+        },
+        "material_post": {
+          "type": "Material",
+          "propagation_model": {
+            "class": "HomogeneousPropagation"
+          },
+          "filename": "D:\\Documents\\Documents\\Repo\\OpticChat\\optiland\\optiland\\database\\data-nk\\glass\\hikari\\SK16.yml",
+          "name": "SK16",
+          "reference": null,
+          "robust_search": true,
+          "min_wavelength": null,
+          "max_wavelength": null
+        },
+        "is_stop": false,
+        "aperture": null,
+        "comment": "",
+        "interaction_model": {
+          "type": "RefractiveReflectiveModel",
+          "is_reflective": false,
+          "coating": null,
+          "bsdf": null
+        }
+      },
+      {
+        "type": "Surface",
+        "thickness": 42.20778,
+        "geometry": {
+          "type": "StandardGeometry",
+          "cs": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 17.96897,
+            "rx": 0.0,
+            "ry": 0.0,
+            "rz": 0.0,
+            "reference_cs": null
+          },
+          "radius": -18.39533,
+          "conic": 0.0
+        },
+        "material_post": {
+          "type": "IdealMaterial",
+          "propagation_model": {
+            "class": "HomogeneousPropagation"
+          },
+          "index": 1.0,
+          "absorp": 0.0
+        },
+        "is_stop": false,
+        "aperture": null,
+        "comment": "",
+        "interaction_model": {
+          "type": "RefractiveReflectiveModel",
+          "is_reflective": false,
+          "coating": null,
+          "bsdf": null
+        }
+      },
+      {
+        "type": "Surface",
+        "thickness": 0.0,
+        "geometry": {
+          "type": "Plane",
+          "cs": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 60.17675,
+            "rx": 0.0,
+            "ry": 0.0,
+            "rz": 0.0,
+            "reference_cs": null
+          },
+          "radius": null
+        },
+        "material_post": {
+          "type": "IdealMaterial",
+          "propagation_model": {
+            "class": "HomogeneousPropagation"
+          },
+          "index": 1.0,
+          "absorp": 0.0
+        },
+        "is_stop": false,
+        "aperture": null,
+        "comment": "",
+        "interaction_model": {
+          "type": "RefractiveReflectiveModel",
+          "is_reflective": false,
+          "coating": null,
+          "bsdf": null
+        }
+      }
+    ]
+  },
+  "ray_tracer": {
+    "ray_aiming_config": {
+      "mode": "paraxial",
+      "max_iter": 10,
+      "tol": 1e-06
+    }
+  }
+}

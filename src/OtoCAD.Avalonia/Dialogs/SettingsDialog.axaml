@@ -1,0 +1,81 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="OtoCAD.Avalonia.Dialogs.SettingsDialog"
+        Title="设置"
+        Width="480" Height="360"
+        WindowStartupLocation="CenterOwner"
+        CanResize="False">
+  <Grid RowDefinitions="*,Auto">
+    <ScrollViewer Grid.Row="0" Padding="16">
+      <StackPanel Spacing="16">
+
+        <!-- 主题 -->
+        <Border BorderBrush="#DDD" BorderThickness="1" Padding="12" CornerRadius="4">
+          <StackPanel Spacing="8">
+            <TextBlock Text="外观" FontWeight="SemiBold" FontSize="13"/>
+            <Grid ColumnDefinitions="100,*">
+              <TextBlock Grid.Column="0" Text="主题:" VerticalAlignment="Center"/>
+              <ComboBox Grid.Column="1" Name="ThemeCombo">
+                <ComboBoxItem Tag="Default">跟随系统</ComboBoxItem>
+                <ComboBoxItem Tag="Light">亮色</ComboBoxItem>
+                <ComboBoxItem Tag="Dark">暗色</ComboBoxItem>
+              </ComboBox>
+            </Grid>
+            <TextBlock Text="重启 OtoCAD 后生效"
+                       Foreground="#888" FontSize="11" FontStyle="Italic"/>
+          </StackPanel>
+        </Border>
+
+        <Border BorderBrush="#DDD" BorderThickness="1" Padding="12" CornerRadius="4">
+          <StackPanel Spacing="8">
+            <TextBlock Text="标注标准" FontWeight="SemiBold" FontSize="13"/>
+            <Grid ColumnDefinitions="100,*">
+              <TextBlock Grid.Column="0" Text="标准:" VerticalAlignment="Center"/>
+              <ComboBox Grid.Column="1" Name="DimensionStandardCombo">
+                <ComboBoxItem Tag="Standard">标准</ComboBoxItem>
+                <ComboBoxItem Tag="ISO-25">ISO-25</ComboBoxItem>
+                <ComboBoxItem Tag="GB">GB</ComboBoxItem>
+                <ComboBoxItem Tag="GB-Optical">GB 光学</ComboBoxItem>
+                <ComboBoxItem Tag="Company">公司标准</ComboBoxItem>
+              </ComboBox>
+            </Grid>
+            <TextBlock Text="自动标注会直接使用这里选择的样式。"
+                       Foreground="#888" FontSize="11" TextWrapping="Wrap"/>
+          </StackPanel>
+        </Border>
+
+        <!-- 自动保存 -->
+        <Border BorderBrush="#DDD" BorderThickness="1" Padding="12" CornerRadius="4">
+          <StackPanel Spacing="8">
+            <TextBlock Text="自动保存" FontWeight="SemiBold" FontSize="13"/>
+            <Grid ColumnDefinitions="100,*">
+              <TextBlock Grid.Column="0" Text="间隔 (秒):" VerticalAlignment="Center"/>
+              <NumericUpDown Grid.Column="1" Name="AutoSaveSpin"
+                             Minimum="0" Maximum="600" Increment="10" FormatString="F0"/>
+            </Grid>
+            <TextBlock Text="0 = 关闭. 自动保存写入 %APPDATA%/OtoCAD/autosave/, 每文件保留最新 3 份."
+                       Foreground="#888" FontSize="11" TextWrapping="Wrap"/>
+          </StackPanel>
+        </Border>
+
+        <!-- 最近文件 -->
+        <Border BorderBrush="#DDD" BorderThickness="1" Padding="12" CornerRadius="4">
+          <StackPanel Spacing="8">
+            <TextBlock Text="最近文件" FontWeight="SemiBold" FontSize="13"/>
+            <TextBlock Name="RecentCountText" Foreground="#666"/>
+            <Button Name="ClearRecentBtn" Content="清空最近文件列表" HorizontalAlignment="Left"/>
+          </StackPanel>
+        </Border>
+
+      </StackPanel>
+    </ScrollViewer>
+
+    <!-- 按钮 -->
+    <Border Grid.Row="1" Background="#F5F5F5" Padding="16,8" BorderBrush="#DDD" BorderThickness="0,1,0,0">
+      <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Spacing="8">
+        <Button Name="OkBtn" Content="确定" Width="80" IsDefault="True"/>
+        <Button Name="CancelBtn" Content="取消" Width="80" IsCancel="True"/>
+      </StackPanel>
+    </Border>
+  </Grid>
+</Window>

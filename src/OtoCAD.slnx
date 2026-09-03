@@ -1,0 +1,31 @@
+<Solution>
+  <Configurations>
+    <Platform Name="Any CPU" />
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Project Path="lcdb/lcdb.csproj">
+    <Platform Solution="*|x64" Project="x64" />
+    <Platform Solution="*|x86" Project="x86" />
+  </Project>
+  <Project Path="lcinterface/lcinterface.csproj">
+    <Platform Solution="*|x64" Project="x64" />
+    <Build Solution="*|x86" Project="false" />
+    <Build Solution="Release|x64" Project="false" />
+  </Project>
+  <Project Path="LitMath/LitMath.csproj">
+    <Platform Solution="*|x64" Project="x64" />
+  </Project>
+  <Project Path="netDxf/netDxf.csproj">
+    <Platform Solution="*|x64" Project="x64" />
+  </Project>
+  <!-- 鑰?WinForms 绔?(OtoCAD) 涓庡叾娴嬭瘯 (OtoCAD.Tests) 宸叉案涔呭皝瀛? 涓嶈繘鏃ュ父鏋勫缓; 鍞竴寮曠敤 DevExpress 鐨勪袱涓」鐩? -->
+  <Project Path="OtoCAD.Avalonia/OtoCAD.Avalonia.csproj">
+    <Platform Solution="*|x64" Project="x64" />
+    <Build Solution="*|x86" Project="false" />
+  </Project>
+  <Project Path="lcdb.Tests/lcdb.Tests.csproj">
+    <Platform Solution="*|x64" Project="x64" />
+  </Project>
+  <!-- 浠樿垂绉佹湁妯″潡 + 娴嬭瘯 (export-oss 鐧藉悕鍗曞, 涓嶅紑婧? -->
+</Solution>

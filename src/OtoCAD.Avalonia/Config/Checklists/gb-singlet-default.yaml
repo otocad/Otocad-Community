@@ -1,0 +1,120 @@
+# 出图清单: GB/T 13323-2009 单透镜光学零件图 (默认)
+#
+# 规则是数据, 引擎 (lcdb.Checklist.ChecklistEvaluator) 是解释器。
+# 每条规则旁注国标条款出处 —— 这份文件同时是清单与合规依据。
+# 改规则改本文件 (热加载, 不重编译); severity: error=不能交付 / warning=建议修。
+#
+# 动词速查:
+#   exists/count       场景匹配 type 的实体数 ≥ min
+#   owned-count        每个光学元件的关联生成物 (Owner) ≥ min
+#   surface-annotation 匹配 surface 过滤的面数须有同样多的 type 标注
+#   effective-aperture 仅当机械外径>通光口径时要求属性区有 Øe 行 (相同时 N/A 不恒红)
+#   no-overlap         among 列出类型间包围盒互不相交
+#   inside-frame       内容不超出图框
+#   zone-rows          属性区某列行数 ≥ min
+#   zone-row-prefix    属性区某列每个 prefix 至少一行以其开头
+version: 1
+name: gb-singlet-default
+# frame: iso-lens   # 可选: 声明 "using frame"(档案控制层), 非空时自动校验在场图框就是它。
+#                   # 已注册: gb-optical / iso-lens; 将来支持用户自定义图框 (如 GB-my-1)。
+#                   # 注意: 档案/清单默认保密(厂规 know-how), 不进 .otocad; share 只给序列化文件。
+items:
+  # GB/T 13323-2009 §1.2 — 光学零件图必须有图框 (标题栏 + 属性区)。
+  - key: frame
+    label: 图框
+    check: exists
+    type: DrawingFrame          # 基类, 匹配 OpticalDrawingFrame / IsoLensDrawingFrame
+    severity: error
+
+  # GB/T 13323-2009 §3 — 光学零件图必标 R1/R2/d/φ 核心尺寸。
+  # owned-count: 每个透镜的自动标注 (Owner==透镜) 至少 4 项 (R1/R2/d/φ)。
+  - key: auto-dims
+    label: 自动标注 R/d/φ
+    check: owned-count
+    min: 4
+    severity: error
+    regen: auto-dims            # 一键重出: 对每个透镜重跑 AutoDimensionLensCmd
+
+  # AR 镀膜标记 (随自动标注生成)。多数光学件需镀膜, 但非强制 → warning。
+  - key: coating
+    label: 镀膜标记 (AR)
+    check: exists
+    type: CoatingMark
+    severity: warning
+    regen: auto-dims
+
+  # ISO 10110-12 — 非球面须给出完整数据块 (方程 z(h) + 矢高表 + 系数 R/K/A4..)。
+  # 升级自旧"指示符在场"弱规则 → 现校验 AsphericDataBlock 数据块实体在场 (设计文档未决项 #1)。
+  # 每个非球面须有一个数据块; 只对存在非球面的图生效 (无非球面 → N/A 不阻塞)。
+  - key: aspheric-mark
+    label: 非球面数据块 (ISO 10110-12 方程+矢高表+系数)
+    check: surface-annotation
+    type: AsphericDataBlock
+    surface: aspheric
+    severity: error
+
+  # 标注互不重叠 (我们讨论的结构 lint 的可枚举部分)。包围盒粗判, 故 warning。
+  - key: dim-no-overlap
+    label: 尺寸标注无重叠
+    check: no-overlap
+    among: [DimensionBase]
+    severity: warning
+
+  # 内容不出图框。包围盒粗判 → warning。
+  - key: inside-frame
+    label: 内容不出图框
+    check: inside-frame
+    severity: warning
+
+  # 有效口径 Øe (ISO 10110-1 §5 / 用户规则): 机械外径 > 通光口径时必须标注 Øe;
+  # 相同时可不标 → 引擎对"无机械外径>通光口径"的图判 N/A, 不恒红 (设计文档未决项 #2 已定)。
+  # 诚实 count-based (无法绑定到具体面) + 我们生成器始终随机械肩补 Øe 行 → 暂 warning。
+  - key: effective-aperture
+    label: 有效口径 Øe (机械外径>通光口径时)
+    check: effective-aperture
+    prefixes: ["Øe"]
+    severity: warning
+
+  # 玻璃必须给出折射率/阿贝数 — 任一列含 n_d 与 v_d 行即可 (column:-1 列布局无关, 单透镜材料在 col1 / 双胶合在 col3)。
+  # 依据 GB/T 13323-2009 §2 对材料的要求。
+  - key: zone-material
+    label: 材料 n_d/v_d 已填
+    check: zone-row-prefix
+    column: -1
+    prefixes: ["n_d", "v_d"]
+    severity: error
+
+  # 属性区·材料列 (col 1) 玻璃缺陷代号 — ISO 10110-10 代号表: 0/应力双折射, 1/气泡与杂质, 2/不均匀性与条纹。
+  # OpticalDrawingFrame 三字段 (Birefringence/BubbleClass/Inhomogeneity) 默认即 "0/" "1/" "2/" 起头,
+  # ISO 单透镜表同样含 0/ 1/ 2/ 行。行标签由 TechnicalRequirementTableComplianceTests 钉死, 勿改。
+  # "每条强制" 待核 GB/T 7962 / ISO 10110-10 通用公差条款 → 暂 warning。
+  - key: zone-material-codes
+    label: 材料·缺陷代号 (0/ 1/ 2/)
+    check: zone-row-prefix
+    column: 1
+    prefixes: ["0/", "1/", "2/"]
+    severity: warning
+
+  # 属性区·前表面 (col 0) 含面形精度 (ISO 10110-5, 代号 3/) 与表面疵病 (ISO 10110-7, 代号 5/)。
+  # 代号格式有据 (见 OpticalDrawingFrame 字段注释); 但"两者皆强制"待核 GB 原文 → 🟡 warning。
+  - key: zone-front-codes
+    label: 前表面·面形/疵病代号 (3/ 5/)
+    check: zone-row-prefix
+    column: 0
+    prefixes: ["3/", "5/"]
+    severity: warning
+
+  - key: zone-back-codes
+    label: 后表面·面形/疵病代号 (3/ 5/)
+    check: zone-row-prefix
+    column: 2
+    prefixes: ["3/", "5/"]
+    severity: warning
+
+  # GB/T 13323-2009 — 标题栏图号 (product_number ≈ DrawingNumber) 应填写。
+  # property 动词: 按键查文档级属性包 (IPropertyExport)。占位"(图样代号)"也算非空, 仅提醒填真值 → warning。
+  - key: drawing-number
+    label: 标题栏·图号
+    check: property
+    prop: DrawingNumber
+    severity: warning

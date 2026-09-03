@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+  <!-- 研磨: 表面 + 双线 + 颗粒 -->
+  <line x1="5" y1="20" x2="27" y2="20" stroke="#1177D7" stroke-width="2"/>
+  <line x1="5" y1="23" x2="27" y2="23" stroke="#1177D7" stroke-width="1"/>
+  <g fill="#1177D7">
+    <circle cx="10" cy="14" r="1.4"/><circle cx="16" cy="11" r="1.4"/><circle cx="22" cy="14" r="1.4"/>
+  </g>
+</svg>

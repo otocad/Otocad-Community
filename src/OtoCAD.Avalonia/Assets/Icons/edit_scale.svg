@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+  <!-- 缩放: 小框→大框 + 对角箭头 -->
+  <g stroke="#1177D7" stroke-width="2" fill="none">
+    <rect x="6" y="6" width="10" height="10"/>
+    <rect x="16" y="16" width="10" height="10"/>
+    <line x1="16" y1="16" x2="26" y2="6"/>
+  </g>
+  <polygon points="26,6 20,7 25,12" fill="#1177D7"/>
+</svg>

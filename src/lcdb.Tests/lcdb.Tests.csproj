@@ -1,0 +1,41 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- 只依赖 lcdb (跨平台 net10.0 面) 的契约层单测项目.
+       刻意不引用 WinForms 的 src/OtoCAD (将封存), 故与 OtoCAD.Tests 分离. -->
+  <PropertyGroup>
+    <!-- 对齐 lcdb 的 WinForms 面 (测试机=Windows). 导入逻辑两面一致, 跨平台面单测可后补. -->
+    <TargetFramework>net10.0-windows7.0</TargetFramework>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <Nullable>disable</Nullable>
+    <IsPackable>false</IsPackable>
+    <IsTestProject>true</IsTestProject>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\lcdb\lcdb.csproj" />
+    <ProjectReference Include="..\LitMath\LitMath.csproj" />
+  </ItemGroup>
+
+  <!-- 嵌入 SHIPPED 出图清单 YAML, 让集成测试校验真实文件 (而非副本), 改坏即红。 -->
+  <ItemGroup>
+    <EmbeddedResource Include="..\OtoCAD.Avalonia\Config\Checklists\gb-singlet-default.yaml" />
+    <!-- 同理嵌入 SHIPPED 数据驱动图框预设 (Config/Frames/*.json): 解析 + 校验 + 渲染 + 键导出全测 -->
+    <EmbeddedResource Include="..\OtoCAD.Avalonia\Config\Frames\*.json" LogicalName="Config.Frames.%(Filename)%(Extension)" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MSTest.TestAdapter" />
+    <PackageReference Include="MSTest.TestFramework" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+  </ItemGroup>
+  <!-- 光学设计导入测试夹具 (v0.5.0 随导入引擎一并下放免费侧, 夹具跟测试走以保证开源版 CI 能跑) -->
+  <ItemGroup>
+    <None Include="fixtures\optic\*.json"
+          Link="fixtures\optic\%(Filename)%(Extension)"
+          CopyToOutputDirectory="PreserveNewest" />
+    <None Include="fixtures\zmx\*.zmx"
+          Link="fixtures\zmx\%(Filename)%(Extension)"
+          CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
+</Project>

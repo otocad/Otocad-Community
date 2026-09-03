@@ -1,0 +1,66 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="OtoCAD.Avalonia.Dialogs.DrawingConventionDialog"
+        Title="出图标准编辑"
+        Width="460" Height="560"
+        WindowStartupLocation="CenterOwner"
+        CanResize="False">
+  <Grid RowDefinitions="*,Auto">
+    <ScrollViewer Grid.Row="0" Padding="16">
+      <StackPanel Spacing="12">
+
+        <Grid ColumnDefinitions="110,*">
+          <TextBlock Grid.Column="0" Text="基准:" VerticalAlignment="Center"/>
+          <ComboBox Grid.Column="1" Name="BaseCombo" HorizontalAlignment="Stretch"/>
+        </Grid>
+        <Grid ColumnDefinitions="110,*">
+          <TextBlock Grid.Column="0" Text="名称:" VerticalAlignment="Center"/>
+          <TextBox Grid.Column="1" Name="NameBox"/>
+        </Grid>
+        <TextBlock Name="ModifiedLabel" Text="● 已修改 — 请用「另存为」保存为新标准"
+                   Foreground="#D08000" FontSize="11" IsVisible="False"/>
+
+        <Border BorderBrush="#DDD" BorderThickness="1" Padding="12" CornerRadius="4">
+          <StackPanel Spacing="8">
+            <TextBlock Text="记法惯例" FontWeight="SemiBold" FontSize="13"/>
+            <Grid ColumnDefinitions="110,*"><TextBlock Grid.Column="0" Text="疵病:" VerticalAlignment="Center"/>
+              <ComboBox Grid.Column="1" Name="SurfaceQualityCombo" HorizontalAlignment="Stretch"/></Grid>
+            <Grid ColumnDefinitions="110,*"><TextBlock Grid.Column="0" Text="面形:" VerticalAlignment="Center"/>
+              <ComboBox Grid.Column="1" Name="FormAccuracyCombo" HorizontalAlignment="Stretch"/></Grid>
+            <Grid ColumnDefinitions="110,*"><TextBlock Grid.Column="0" Text="表面结构:" VerticalAlignment="Center"/>
+              <ComboBox Grid.Column="1" Name="RoughnessCombo" HorizontalAlignment="Stretch"/></Grid>
+            <Grid ColumnDefinitions="110,*"><TextBlock Grid.Column="0" Text="激光损伤:" VerticalAlignment="Center"/>
+              <ComboBox Grid.Column="1" Name="LaserDamageCombo" HorizontalAlignment="Stretch"/></Grid>
+          </StackPanel>
+        </Border>
+
+        <Border BorderBrush="#DDD" BorderThickness="1" Padding="12" CornerRadius="4">
+          <StackPanel Spacing="8">
+            <TextBlock Text="单位 / 样式" FontWeight="SemiBold" FontSize="13"/>
+            <Grid ColumnDefinitions="110,*"><TextBlock Grid.Column="0" Text="单位:" VerticalAlignment="Center"/>
+              <ComboBox Grid.Column="1" Name="UnitsCombo" HorizontalAlignment="Stretch"/></Grid>
+            <Grid ColumnDefinitions="110,*"><TextBlock Grid.Column="0" Text="尺寸样式:" VerticalAlignment="Center"/>
+              <ComboBox Grid.Column="1" Name="DimKeyCombo" HorizontalAlignment="Stretch"/></Grid>
+            <Grid ColumnDefinitions="110,*"><TextBlock Grid.Column="0" Text="底层样式:" VerticalAlignment="Center"/>
+              <ComboBox Grid.Column="1" Name="StyleCombo" HorizontalAlignment="Stretch"/></Grid>
+            <TextBlock Text="底层样式 = 线型/颜色/图层 profile(GB / ISO)。"
+                       Foreground="#888" FontSize="11" TextWrapping="Wrap"/>
+            <Grid ColumnDefinitions="110,*"><TextBlock Grid.Column="0" Text="图框模板:" VerticalAlignment="Center"/>
+              <ComboBox Grid.Column="1" Name="FrameCombo" HorizontalAlignment="Stretch"/></Grid>
+            <TextBlock Text="图框模板 = 一键出图用的图框:gb-lens(GB 中文)/ iso-lens(ISO),或 Config/Frames 里自定义图框定义的名字(复制 GB-my-1.json 改名即自家图框)。"
+                       Foreground="#888" FontSize="11" TextWrapping="Wrap"/>
+          </StackPanel>
+        </Border>
+
+      </StackPanel>
+    </ScrollViewer>
+
+    <Border Grid.Row="1" Background="#F5F5F5" Padding="16,8" BorderBrush="#DDD" BorderThickness="0,1,0,0">
+      <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Spacing="8">
+        <Button Name="OkBtn" Content="应用为当前" Width="96" IsDefault="True"/>
+        <Button Name="SaveAsBtn" Content="另存为…" Width="80"/>
+        <Button Name="CancelBtn" Content="取消" Width="72" IsCancel="True"/>
+      </StackPanel>
+    </Border>
+  </Grid>
+</Window>

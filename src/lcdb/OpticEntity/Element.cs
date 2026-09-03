@@ -1,0 +1,750 @@
+using lcdb;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+using LitMath;
+using OtoCAD.OpticEntity;
+using OtoCAD.OpticEntity.Generators;
+using lcdb.Annotation;
+using Point = System.Drawing.Point;
+using netDxf;
+using System.Text.Json.Serialization;
+using System.Reflection;
+using lcdb.Transaction;
+using Vector2 = LitMath.Vector2;
+
+namespace OtoCAD.OpticEntity
+{
+    public class SurfaceParameter
+    {
+        public double Radius { get; set; }
+        public double Thickness { get; set; }
+        public string Glass { get; set; }
+        public double SemiDiameter { get; set; }
+        public double Conic { get; set; }
+        public double[] Par { get; set; }
+        public string SurfaceType { get; set; }
+        public double UniRadius { get; set; }
+        public int MaxParInt { get; set; }
+        public List<double> ExtraDoubles { get; set; }
+        public double Sag { get; set; }
+
+        public SurfaceParameter()
+        {
+            Par = new double[8];
+            ExtraDoubles = new List<double>();
+        }
+
+        public double[] GetSag(double[] x)
+        {
+            double[] y = new double[x.Length];
+            for (int i = 0; i < x.Length; i++)
+            {
+                y[i] = GetSag1(x[i]);
+            }
+
+            return y;
+        }
+
+        public double GetSag1(double x)
+        {
+
+            double C = 1.0 / Radius;
+            double H = x;
+
+            double Z1 = C * H * H / (1.0 + Math.Sqrt(1.0 - (1.0 + Conic) * C * C * H * H));
+            double Zrest = 0.0;
+            for (int i = 0; i < 8; i++)
+            {
+                Zrest += Par[i] * Math.Pow(H, (i + 1) * 2);
+            }
+
+            return Z1 + Zrest;
+        }
+    }
+
+    public class Element : BaseElementBlock
+    {
+        // public virtual string BlockName { get; } = "ModelSpace";
+        
+        /// <summary>
+        /// 元件名称
+        /// </summary>
+        public string ElementName { get; set; } = "Element";
+        [Browsable(false)]
+        public IElementSurface Surface1 { get; set; } = new SurfaceStandard();
+        [Browsable(false)]
+        public IElementSurface Surface2 { get; set; } = new SurfaceStandard();
+        
+
+        public string ZemaxFilePath { get; set; }
+        /// <summary>
+        /// 是否自动添加倒角
+        /// </summary>
+        public bool AutoCoatingLabel { get; set; } = false;
+
+        #region IOpticalElement Implementation
+
+        /// <summary>
+        /// 折射率
+        /// </summary>
+        [Category("Optical Properties")]
+        [DisplayName("折射率")]
+        [Description("材料的折射率")]
+        public virtual double RefractiveIndex { get; set; } = 1.5168;
+
+        /// <summary>
+        /// 阿贝数
+        /// </summary>
+        [Category("Optical Properties")]
+        [DisplayName("阿贝数")]
+        [Description("材料的阿贝数")]
+        public virtual double AbbeNumber { get; set; } = 64.17;
+
+        /// <summary>
+        /// 玻璃类型
+        /// </summary>
+        [Category("Optical Properties")]
+        [DisplayName("玻璃类型")]
+        [Description("光学玻璃的类型")]
+        public virtual string GlassType { get; set; } = "BK7";
+
+        /// <summary>
+        /// 厚度
+        /// </summary>
+        [Category("Optical Properties")]
+        [DisplayName("厚度")]
+        [Description("光学元件的厚度 (mm)")]
+        public virtual double Thickness 
+        { 
+            get => Surface1?.Thickness ?? 5.0;
+            set
+            {
+                if (Surface1 != null)
+                    Surface1.Thickness = value;
+            }
+        }
+
+        /// <summary>
+        /// 半径
+        /// </summary>
+        [Category("Optical Properties")]
+        [DisplayName("半径")]
+        [Description("光学元件的半径 (mm)")]
+        public virtual double SemiDiameter 
+        { 
+            get => Surface1?.SemiDiameter ?? 12.7;
+            set
+            {
+                if (Surface1 != null)
+                    Surface1.SemiDiameter = value;
+                if (Surface2 != null)
+                    Surface2.SemiDiameter = value;
+            }
+        }
+
+        /// <summary>
+        /// 表面集合
+        /// </summary>
+        [Browsable(false)]
+        [JsonIgnore]
+        public virtual IList<IOpticalSurface> Surfaces { get; protected set; } = new List<IOpticalSurface>();
+
+        /// <summary>
+        /// 自动生成镀膜标记
+        /// </summary>
+        [Category("Annotation")]
+        [DisplayName("自动镀膜标记")]
+        [Description("是否自动生成镀膜标记")]
+        public virtual bool AutoGenerateCoatingMarks { get; set; } = true;
+
+        /// <summary>
+        /// 自动生成尺寸标注
+        /// </summary>
+        [Category("Annotation")]
+        [DisplayName("自动尺寸标注")]
+        [Description("是否自动生成尺寸标注")]
+        public virtual bool AutoGenerateDimensions { get; set; } = true;
+
+        #endregion
+        
+        #region IOpticalElement Implementation
+        
+        // Existing properties are already defined above, adding missing ones:
+        
+        [Browsable(false)]
+        public new ObjectId id => new ObjectId();
+        
+        [Browsable(false)]
+        public Vector2 Position 
+        { 
+            get => new Vector2((float)OriginalX, (float)OriginalY);
+            set 
+            {
+                OriginalX = value.X;
+                OriginalY = value.Y;
+            }
+        }
+        
+        [Browsable(false)]
+        public double Rotation { get; set; } = 0.0;
+        
+        [Browsable(false)]
+        public string Material 
+        { 
+            get => GlassType;
+            set => GlassType = value;
+        }
+        
+        [Browsable(false)]
+        public double Diameter 
+        { 
+            get => SemiDiameter * 2.0;
+            set => SemiDiameter = value / 2.0;
+        }
+        
+        [Browsable(false)]
+        public double CenterThickness 
+        { 
+            get => Thickness;
+            set => Thickness = value;
+        }
+        
+        [Browsable(false)]
+        public string OpticalType => "Element";
+        
+        [Browsable(false)]
+        public double Radius1 => Surface1?.Radius ?? 0.0;
+        
+        [Browsable(false)]
+        public double Radius2 => Surface2?.Radius ?? 0.0;
+        
+        
+        [Browsable(false)]
+        public ObjectId layerId { get; set; } = new ObjectId();
+        
+        [Browsable(false)]
+        public lcdb.Colors.Color color { get; set; } = lcdb.Colors.Color.ByLayer;
+        
+        [Browsable(false)]
+        public LineWeight lineWeight { get; set; } = LineWeight.ByLayer;
+   
+        
+        public void NotifyModified()
+        {
+            DataUpdate();
+        }
+        
+       
+        
+       
+        
+        #endregion
+
+        public Element() { }
+        public Element(Database database) : base(database)
+        {
+            BlockSelect = false;
+        }
+        // 标注点属性 - 从LensOutline移过来
+        private Vector2 DimCenterThickness1 { get; set; }
+        private Vector2 DimCenterThickness2 { get; set; }
+        private double DimCenterThicknessOffset { get; set; }
+        private Vector2 DimSagFull1 { get; set; }
+        private Vector2 DimSagFull2 { get; set; }
+        private double DimSagFullOffset { get; set; }
+        private Vector2 DimEdgeThicknessTop1 { get; set; }
+        private Vector2 DimEdgeThicknessTop2 { get; set; }
+        private Vector2 DimSagLeft1 { get; set; }
+        private Vector2 DimSagLeft2 { get; set; }
+        private Vector2 DimSagRight1 { get; set; }
+        private Vector2 DimSagRight2 { get; set; }
+        private double RealDiameter { get; set; }
+        private double RealDiameter2 { get; set; }
+        private SingleLensType SingleLensType { get; set; } = SingleLensType.EqualDiameter;
+
+        /// <summary>
+        /// 轮廓实体，只包含轮廓线条
+        /// </summary>
+        public LensOutlineEntity outlineEntity { get; set; }
+
+        /// <summary>
+        /// 标注实体列表
+        /// </summary>
+        private List<Entity> dimensionEntities { get; set; } = new List<Entity>();
+
+
+        public override void SetDataBase(Database database)
+        {
+            this.database = database;
+        }
+
+
+
+        public delegate void ElementBlockChangedEventHandler(Element sender, netDxf.Tables.TableObjectChangedEventArgs<netDxf.Blocks.Block> e);
+
+        public event ElementBlockChangedEventHandler ElementBlockChanged;
+        protected virtual netDxf.Blocks.Block OnElementBlockChangedEvent(netDxf.Blocks.Block oldBlock, netDxf.Blocks.Block newBlock)
+        {
+            ElementBlockChangedEventHandler ae = this.ElementBlockChanged;
+            if (ae != null)
+            {
+                netDxf.Tables.TableObjectChangedEventArgs<netDxf.Blocks.Block> eventArgs = new netDxf.Tables.TableObjectChangedEventArgs<netDxf.Blocks.Block>(oldBlock, newBlock);
+                ae(this, eventArgs);
+                return eventArgs.NewValue;
+            }
+            return newBlock;
+        }       
+
+        public void GetSurfacePar(double SignedR1, double SemiDiameter1, out double RealDia, out double UnsigndSag, out double AngStart, out double AngEnd)
+        {
+         
+            UnsigndSag = 0.0;
+            RealDia = SemiDiameter1;
+            AngStart = 0.0;
+            AngEnd = 0.0;
+
+            var anglea = 0.0;
+            if (SemiDiameter1 < Math.Abs(SignedR1))
+            {
+                anglea = Math.Asin(SemiDiameter1 / SignedR1);
+                UnsigndSag  = Math.Abs(SignedR1) - Math.Sqrt(SignedR1 * SignedR1 - SemiDiameter1 * SemiDiameter1);
+                
+            }
+            else
+            {
+                // super sphere
+                RealDia = Math.Abs(SignedR1);
+                anglea = SignedR1<0 ? -Math.PI / 2.0: Math.PI / 2.0;
+                UnsigndSag = Math.Abs(SignedR1);
+            }
+           
+
+            if (SignedR1 > 0.0)
+            {
+                AngStart = Math.PI - anglea;
+                AngEnd = Math.PI + anglea;
+               
+            }
+            else
+            {
+              
+                AngStart = anglea;
+                AngEnd = -anglea;
+                UnsigndSag = -UnsigndSag;
+            }
+
+
+        }
+
+        protected override void GenerateEntitiesWithTransaction(IEntityTransaction transaction)
+        {
+            try
+            {
+                var savepoint = transaction.CreateSavepoint("BeforeLensOutline");
+
+                UpdateGeometryOpticalData();
+                outlineEntity = ElementOutlineGenerator.GenerateOutlineEntity(this);
+                if (outlineEntity != null)
+                {
+                    outlineEntity.layerId = this.layerId;
+                    outlineEntity.color = this.color;
+                    outlineEntity.lineWeight = this.lineWeight;
+                    AppendEntityWithTransaction(transaction, outlineEntity);
+                }
+                if (AutoGenerateDimensions)
+                {
+                    dimensionEntities.Clear();
+
+                    // 计算标注点
+                    SetDimensionPoints();
+
+                    var dimensions = ElementDimensionGenerator.GenerateDimensions(this);
+                    foreach (var dim in dimensions)
+                    {
+                        dim.layerId = this.layerId;
+                        dim.color = this.color;
+                        dimensionEntities.Add(dim);
+                        AppendEntityWithTransaction(transaction, dim);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidOperationException($"Failed to generate lens elements: {ex.Message}", ex);
+            }
+        }
+
+        protected override void GenerateEntitiesLegacy()
+        {
+            UpdateGeometryOpticalData();
+            outlineEntity = ElementOutlineGenerator.GenerateOutlineEntity(this);
+            if (outlineEntity != null)
+            {
+                outlineEntity.layerId = this.layerId;
+                outlineEntity.color = this.color;
+                outlineEntity.lineWeight = this.lineWeight;
+                AppendEntity(outlineEntity);
+            }
+            if (AutoGenerateDimensions)
+            {
+                dimensionEntities.Clear();
+
+                // 计算标注点
+                SetDimensionPoints();
+
+                var dimensions = ElementDimensionGenerator.GenerateDimensions(this);
+                foreach (var dim in dimensions)
+                {
+                    dim.layerId = this.layerId;
+                    dim.color = this.color;
+                    dimensionEntities.Add(dim); // 存储到属性中
+                    AppendEntity(dim);
+                }
+            }
+        }
+
+
+        public override void GenEntity()
+        {
+            if (database == null)
+            {
+                return;
+            }
+
+            SafeClearEntity();
+
+            if (!Active)
+            {
+                return;
+            }
+
+            base.GenEntity();
+        }
+        private void SetGripPointAt(int index, GripPoint gripPoint, LitMath.Vector2 newPosition)
+        {
+            if (index == 2)
+            {               
+                base.DataUpdate();
+            }
+        }
+
+        #region IOpticalElement Interface Methods
+
+        /// <summary>
+        /// 获取光学中心
+        /// </summary>
+        /// <returns>光学中心坐标</returns>
+        public virtual Vector2 GetOpticalCenter()
+        {
+            return new Vector2(OriginalX + Thickness * 0.5, OriginalY);
+        }
+
+        /// <summary>
+        /// 获取焦距
+        /// </summary>
+        /// <returns>焦距值</returns>
+        public virtual double GetFocalLength()
+        {
+            var n = RefractiveIndex;
+            var R1 = Surface1?.Radius ?? double.PositiveInfinity;
+            var R2 = Surface2?.Radius ?? double.PositiveInfinity;
+            
+            if (Math.Abs(R1) < 1e-10 && Math.Abs(R2) < 1e-10)
+                return double.PositiveInfinity;
+
+            var power = (n - 1) * (1.0 / R1 - 1.0 / R2);
+            return Math.Abs(power) > 1e-10 ? 1.0 / power : double.PositiveInfinity;
+        }
+
+        /// <summary>
+        /// 获取有效焦距
+        /// </summary>
+        /// <returns>有效焦距值</returns>
+        public virtual double GetEffectiveFocalLength()
+        {
+            return GetFocalLength();
+        }
+
+        /// <summary>
+        /// 获取后焦距
+        /// </summary>
+        /// <returns>后焦距值</returns>
+        public virtual double GetBackFocalLength()
+        {
+            var efl = GetEffectiveFocalLength();
+            var t = Thickness;
+            var n = RefractiveIndex;
+            return efl - t / n;
+        }
+
+        /// <summary>
+        /// 生成标注
+        /// </summary>
+        public virtual void GenerateAnnotations()
+        {
+            if (AutoGenerateDimensions)
+            {
+                GenerateDimensions();
+            }
+            
+            if (AutoGenerateCoatingMarks)
+            {
+                GenerateCoatingMarks();
+            }
+        }
+
+        /// <summary>
+        /// 生成镀膜标记
+        /// </summary>
+        public virtual void GenerateCoatingMarks()
+        {
+        }
+
+        /// <summary>
+        /// 生成尺寸标注
+        /// </summary>
+        public virtual void GenerateDimensions()
+        {
+        }
+
+        /// <summary>
+        /// 验证光学参数
+        /// </summary>
+        /// <returns>验证结果</returns>
+        public virtual ValidationResult ValidateOpticalParameters()
+        {
+            var result = new ValidationResult { IsValid = true };
+
+            if (RefractiveIndex <= 1.0 || RefractiveIndex > 3.0)
+            {
+                result.IsValid = false;
+                result.ErrorMessages.Add($"折射率 {RefractiveIndex} 超出合理范围 (1.0, 3.0]");
+            }
+
+            if (AbbeNumber <= 0 || AbbeNumber > 100)
+            {
+                result.IsValid = false;
+                result.ErrorMessages.Add($"阿贝数 {AbbeNumber} 超出合理范围 (0, 100]");
+            }
+
+            if (Thickness <= 0)
+            {
+                result.IsValid = false;
+                result.ErrorMessages.Add($"厚度 {Thickness} 必须大于0");
+            }
+
+            if (SemiDiameter <= 0)
+            {
+                result.IsValid = false;
+                result.ErrorMessages.Add($"半径 {SemiDiameter} 必须大于0");
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// 计算光学性能
+        /// </summary>
+        /// <returns>光学性能数据</returns>
+        public virtual OpticalPerformanceData CalculatePerformance()
+        {
+            var performance = new OpticalPerformanceData();
+            
+            performance.EffectiveFocalLength = GetEffectiveFocalLength();
+            performance.BackFocalLength = GetBackFocalLength();
+            var opticalCenter = GetOpticalCenter();
+            performance.PrincipalPoint = new LitMath.Vector3(opticalCenter.X, opticalCenter.Y, 0);
+            performance.NodalPoint = new LitMath.Vector3(opticalCenter.X, opticalCenter.Y, 0);
+            performance.FNumber = Math.Abs(performance.EffectiveFocalLength) / (SemiDiameter * 2);
+            performance.NumericalAperture = 1.0 / (2.0 * performance.FNumber);
+            
+            return performance;
+        }
+
+        /// <summary>
+        /// 添加表面到集合
+        /// </summary>
+        /// <param name="surface">表面对象</param>
+        protected virtual void AddSurface(IOpticalSurface surface)
+        {
+            if (surface != null && !Surfaces.Contains(surface))
+            {
+                Surfaces.Add(surface);
+            }
+        }
+
+        #endregion
+
+        /// <summary>
+        /// 镀膜标记集合 - 现在作为只读属性，实际存储在Document中
+        /// </summary>
+        [Browsable(false)]
+        [JsonIgnore]
+        public virtual IList<CoatingMark> CoatingMarks
+        {
+            get
+            {
+                return new List<CoatingMark>();
+            }
+        }
+
+        /// <summary>
+        /// 更新光学数据后的几何形状
+        /// </summary>
+        public void UpdateGeometryOpticalData()
+        {
+            var validation = ValidateOpticalParameters();
+
+            if (Surface1 != null)
+            {
+                Surface1.BasePoint1 = new Vector2(OriginalX, OriginalY);
+                Surface1.SemiDiameter = SemiDiameter;
+                Surface1.Thickness = Thickness;
+                if (Surface1 is SurfaceStandard surfaceStd1)
+                {
+                    surfaceStd1.Glass = GlassType;
+                }
+            }
+
+            if (Surface2 != null)
+            {
+                Surface2.BasePoint1 = new Vector2(OriginalX + Thickness, OriginalY);
+                Surface2.SemiDiameter = SemiDiameter;
+                if (Surface2 is SurfaceStandard surfaceStd2)
+                {
+                    surfaceStd2.Glass = GlassType;
+                }
+            }
+
+            // 生成Surface的实体，计算出SagPoint等关键坐标
+            Surface1?.GenEntity();
+            Surface2?.GenEntity();
+
+            // 计算透镜参数
+            CalculateLensParameters();
+
+            
+        }
+
+        /// <summary>
+        /// 计算透镜参数（从LensOutline移过来）
+        /// </summary>
+        private void CalculateLensParameters()
+        {
+            if (Surface1 == null || Surface2 == null)
+                return;
+
+            RealDiameter = Surface1.RealDiameter;
+            RealDiameter2 = Surface2.RealDiameter;
+
+            if (RealDiameter < RealDiameter2)
+            {
+                SingleLensType = SingleLensType.RightLarger;
+            }
+            else if (RealDiameter > RealDiameter2)
+            {
+                SingleLensType = SingleLensType.LeftLarger;
+            }
+            else
+            {
+                SingleLensType = SingleLensType.EqualDiameter;
+            }
+        }
+
+        /// <summary>
+        /// 设置标注点（从LensOutline移过来）
+        /// </summary>
+        private void SetDimensionPoints()
+        {
+            if (Surface1 == null || Surface2 == null)
+                return;
+
+            var OriginalX = this.OriginalX;
+            var OriginalY = this.OriginalY;
+
+            // 使用SemiDiameter而不是RealDiameter，以正确处理超半球情况
+            var maxDiameter = Math.Max(Surface1.SemiDiameter, Surface2.SemiDiameter);
+            var topleftXGlobal = Surface1.SagPoint.X;
+            var toprightXInGlobal = Surface2.SagPoint.X;
+
+            // 计算合理的间距，基于最大直径的比例
+            var baseSpacing = Math.Max(20.0, maxDiameter * 0.1); // 至少20单位，或直径的10%
+            var dimensionSpacing = baseSpacing * 0.8; // 标注之间的间距
+
+            // 标注点设置
+            DimCenterThickness1 = new Vector2(OriginalX, OriginalY);
+            DimCenterThickness2 = new Vector2(OriginalX + Thickness, OriginalY);
+            DimCenterThicknessOffset = maxDiameter + baseSpacing;
+
+            // Max sag for moon lens
+            var leftMost = Surface1.Radius < 0.0 ? Surface1.SagPoint : Surface1.BasePoint1;
+            var rightMost = Surface2.Radius > 0.0 ? Surface2.SagPoint : Surface2.BasePoint1;
+
+            DimSagFull1 = new Vector2(leftMost.X, -Surface2.RealDiameter + Surface2.BasePoint1.Y);
+            DimSagFull2 = new Vector2(rightMost.X, -Surface2.RealDiameter + Surface2.BasePoint1.Y);
+            DimSagFullOffset = baseSpacing + dimensionSpacing * 2; // 增加间距避免重叠
+
+            DimEdgeThicknessTop1 = new Vector2(topleftXGlobal, maxDiameter + OriginalY);
+            DimEdgeThicknessTop2 = new Vector2(toprightXInGlobal, maxDiameter + OriginalY);
+
+            DimSagLeft1 = new Vector2(topleftXGlobal, RealDiameter + OriginalY);
+            DimSagLeft2 = new Vector2(topleftXGlobal, -RealDiameter + OriginalY);
+
+            DimSagRight1 = new Vector2(toprightXInGlobal, RealDiameter2 + OriginalY);
+            DimSagRight2 = new Vector2(toprightXInGlobal, -RealDiameter2 + OriginalY);
+        }
+
+        /// <summary>
+        /// 获取标注点（供ElementDimensionGenerator使用）
+        /// </summary>
+        internal DimensionPointsData GetDimensionPoints()
+        {
+            return new DimensionPointsData
+            {
+                DimCenterThickness1 = this.DimCenterThickness1,
+                DimCenterThickness2 = this.DimCenterThickness2,
+                DimCenterThicknessOffset = this.DimCenterThicknessOffset,
+                DimSagFull1 = this.DimSagFull1,
+                DimSagFull2 = this.DimSagFull2,
+                DimSagFullOffset = this.DimSagFullOffset,
+                DimEdgeThicknessTop1 = this.DimEdgeThicknessTop1,
+                DimEdgeThicknessTop2 = this.DimEdgeThicknessTop2,
+                DimSagLeft1 = this.DimSagLeft1,
+                DimSagLeft2 = this.DimSagLeft2,
+                DimSagRight1 = this.DimSagRight1,
+                DimSagRight2 = this.DimSagRight2,
+                RealDiameter = this.RealDiameter,
+                RealDiameter2 = this.RealDiameter2,
+                SingleLensType = this.SingleLensType
+            };
+        }
+    }
+
+    /// <summary>
+    /// 标注点数据类
+    /// </summary>
+    internal class DimensionPointsData
+    {
+        public Vector2 DimCenterThickness1 { get; set; }
+        public Vector2 DimCenterThickness2 { get; set; }
+        public double DimCenterThicknessOffset { get; set; }
+        public Vector2 DimSagFull1 { get; set; }
+        public Vector2 DimSagFull2 { get; set; }
+        public double DimSagFullOffset { get; set; }
+        public Vector2 DimEdgeThicknessTop1 { get; set; }
+        public Vector2 DimEdgeThicknessTop2 { get; set; }
+        public Vector2 DimSagLeft1 { get; set; }
+        public Vector2 DimSagLeft2 { get; set; }
+        public Vector2 DimSagRight1 { get; set; }
+        public Vector2 DimSagRight2 { get; set; }
+        public double RealDiameter { get; set; }
+        public double RealDiameter2 { get; set; }
+        public SingleLensType SingleLensType { get; set; }
+    }
+}

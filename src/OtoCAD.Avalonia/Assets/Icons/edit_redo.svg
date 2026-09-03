@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+  <!-- 重做箭头 -->
+  <path d="M20,8 L26,14 L20,20 M26,14 H12 C8,14 6,16 6,20 C6,24 8,26 12,26 H16" 
+        fill="none" stroke="#1177D7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

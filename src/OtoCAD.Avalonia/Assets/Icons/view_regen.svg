@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128px" height="128px">
+  <defs>
+    <linearGradient id="regen-gradient" gradientUnits="userSpaceOnUse">
+      <stop style="stop-color: #3dc2ec;"/>
+    </linearGradient>
+  </defs>
+  <!-- 刷新圆弧箭头 -->
+  <path d="M 64 25 A 30 30 0 1 1 34 55" fill="none" stroke="url(#regen-gradient)" stroke-width="8" stroke-linecap="round"/>
+  <path d="M 64 103 A 30 30 0 1 1 94 73" fill="none" stroke="url(#regen-gradient)" stroke-width="8" stroke-linecap="round"/>
+  <!-- 箭头 -->
+  <path d="M 34 55 L 28 48 L 41 50 Z" fill="url(#regen-gradient)"/>
+  <path d="M 94 73 L 100 80 L 87 78 Z" fill="url(#regen-gradient)"/>
+</svg>

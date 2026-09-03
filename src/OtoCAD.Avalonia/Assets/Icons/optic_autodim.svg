@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+  <!-- 自动标注: 透镜 + 自动尺寸界线/箭头 -->
+  <g stroke="#1177D7" stroke-width="1.8" fill="none">
+    <path d="M13 7 Q19 16 13 25 Q10 16 13 7 Z"/>
+    <line x1="20" y1="7" x2="20" y2="25"/>
+  </g>
+  <polygon points="20,7 18.5,11 21.5,11" fill="#1177D7"/>
+  <polygon points="20,25 18.5,21 21.5,21" fill="#1177D7"/>
+  <text x="24" y="19" font-family="Arial" font-size="11" fill="#1177D7">A</text>
+</svg>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+  <!-- 表面纹理: 波纹三线 -->
+  <g stroke="#1177D7" stroke-width="1.8" fill="none">
+    <path d="M5 12 Q10 8 15 12 T25 12"/>
+    <path d="M5 18 Q10 14 15 18 T25 18"/>
+    <path d="M5 24 Q10 20 15 24 T25 24"/>
+  </g>
+</svg>

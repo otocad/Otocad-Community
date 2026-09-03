@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128px" height="128px">
+  <defs>
+    <linearGradient id="extend-gradient1" gradientUnits="userSpaceOnUse">
+      <stop style="stop-color: #4b70f5;"/>
+    </linearGradient>
+    <linearGradient id="extend-gradient2" gradientUnits="userSpaceOnUse">
+      <stop style="stop-color: #3dc2ec;"/>
+    </linearGradient>
+  </defs>
+  <!-- 外框 -->
+  <rect x="20" y="20" width="88" height="88" fill="none" stroke="url(#extend-gradient1)" stroke-width="6" rx="4"/>
+  <!-- 四个角的扩展箭头 -->
+  <!-- 左上角 -->
+  <path d="M 35 35 L 25 25 L 35 25 M 25 25 L 25 35" stroke="url(#extend-gradient2)" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- 右上角 -->
+  <path d="M 93 35 L 103 25 L 93 25 M 103 25 L 103 35" stroke="url(#extend-gradient2)" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- 左下角 -->
+  <path d="M 35 93 L 25 103 L 35 103 M 25 103 L 25 93" stroke="url(#extend-gradient2)" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- 右下角 -->
+  <path d="M 93 93 L 103 103 L 93 103 M 103 103 L 103 93" stroke="url(#extend-gradient2)" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

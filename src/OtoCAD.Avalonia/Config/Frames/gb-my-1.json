@@ -1,0 +1,51 @@
+{
+  "name": "GB-my-1",
+  "title": "我厂光学件图框 (自定义示例)",
+  "note": "用户自定义图框示例 (设计稿 docs/开发文档/图框数据驱动设计.md 的样例补全): 中文标题栏 + ISO 10110 三列表 + 第一角投影符号. 复制本文件改名即可做自家图框; 在「出图标准编辑」把图框模板选成本定义名, 一键出图即用它 (标题栏格经 bagKeys 吃出图属性包的 DrawingTitle/Designer/scale/sheet 等键); 放置后定义内嵌进 .otocad, 换机器打开不依赖本文件. 属性区代号仍须符合 GB/T 13323 / ISO 10110 — 出图清单 frame-is 与属性区规则不因图框自定义放松.",
+  "paper": "A4P",
+  "border": { "margin": 8 },
+  "bands": [
+    {
+      "kind": "notes", "height": 12,
+      "fields": [
+        { "key": "Notes", "label": "NOTES" },
+        { "key": "GeneralTol", "label": "通用公差", "width": 52, "default": "尺寸单位 mm\n未注公差按 ISO 10110-11" }
+      ]
+    },
+    {
+      "kind": "title-grid", "height": 16, "rows": 1, "cols": 8,
+      "cells": [
+        { "key": "ProjectPart", "label": "零件 / 图号", "col": 0, "w": 3, "textHeight": 3.2, "bagKeys": [ "DrawingTitle", "name" ] },
+        { "key": "DrawnBy", "label": "制图", "col": 3, "w": 1, "bagKeys": [ "Designer", "designer" ] },
+        { "key": "ApprovedBy", "label": "审核", "col": 4, "w": 1, "bagKeys": [ "reviewer", "approver" ] },
+        { "key": "DrawDate", "label": "日期", "col": 5, "w": 1, "bagKeys": [ "DesignDate" ] },
+        { "key": "DrawScale", "label": "比例", "col": 6, "w": 1, "default": "1:1", "bagKeys": [ "scale", "Scale" ] },
+        { "key": "Sheet", "label": "张次", "col": 7, "w": 1, "default": "1 / 1", "bagKeys": [ "sheet" ] }
+      ]
+    },
+    {
+      "kind": "spec-table", "rowHeight": 6,
+      "columns": [
+        {
+          "title": "前表面",
+          "seed": [ "R", "3/ (1.0)", "4/ 0.5'", "5/ 3×0.1", "P3" ],
+          "seedKeys": [ "radius_front", "form_front", "centering_front", "imperfection_front", "texture_front" ]
+        },
+        {
+          "title": "材料",
+          "seed": [ "N-BK7", "n_d 1.5168", "v_d 64.17", "0/ 20", "1/ 3×0.16", "2/ 2;2" ],
+          "seedKeys": [ "material_name", "n_d", "v_d", "birefringence", "bubble", "inhomogeneity" ]
+        },
+        {
+          "title": "后表面",
+          "seed": [ "R", "3/ (1.0)", "4/ 0.5'", "5/ 3×0.1", "P3" ],
+          "seedKeys": [ "radius_back", "form_back", "centering_back", "imperfection_back", "texture_back" ]
+        }
+      ]
+    }
+  ],
+  "furniture": [
+    { "kind": "projection-symbol", "angle": "first", "at": "notes-right" }
+  ],
+  "style": { "cellTextHeight": 2.5, "lineWeight": 0.25 }
+}

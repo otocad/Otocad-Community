@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+  <!-- 删除图标 - X形 -->
+  <g stroke="#D11C1C" stroke-width="3" stroke-linecap="round">
+    <line x1="8" y1="8" x2="24" y2="24"/>
+    <line x1="24" y1="8" x2="8" y2="24"/>
+  </g>
+</svg>

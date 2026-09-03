@@ -1,0 +1,88 @@
+<Project>
+  <PropertyGroup>
+    <!-- .NET 10 目标框架 -->
+    <TargetFramework>net10.0-windows7.0</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+
+    <!-- 语言和编译设置 -->
+    <LangVersion>latest</LangVersion>
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+
+    <!-- 高 DPI 支持 -->
+    <ApplicationHighDpiMode>SystemAware</ApplicationHighDpiMode>
+    <ForceDesignerDpiUnaware>true</ForceDesignerDpiUnaware>
+
+    <!-- 定义构建输出基础目录 -->
+    <BuildOutputRoot>$(MSBuildThisFileDirectory)BuildOutput</BuildOutputRoot>
+
+    <!-- 根据配置设置输出路径 -->
+    <OutputPath Condition="'$(Configuration)' == 'Debug'">$(BuildOutputRoot)\Debug\</OutputPath>
+    <OutputPath Condition="'$(Configuration)' == 'Release'">$(BuildOutputRoot)\Release\</OutputPath>
+
+    <!-- 设置中间输出目录（obj文件） -->
+    <BaseIntermediateOutputPath>$(BuildOutputRoot)\obj\$(MSBuildProjectName)\</BaseIntermediateOutputPath>
+    <IntermediateOutputPath>$(BaseIntermediateOutputPath)$(Configuration)\</IntermediateOutputPath>
+
+    <!-- 设置包输出目录 -->
+    <PackageOutputPath>$(BuildOutputRoot)\Packages\</PackageOutputPath>
+
+    <!-- 日志输出目录 -->
+    <LogOutputPath>$(BuildOutputRoot)\Logs\</LogOutputPath>
+
+    <!-- 禁用自动生成AssemblyInfo -->
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+
+    <!-- 启用确定性构建 -->
+    <Deterministic>true</Deterministic>
+
+    <!-- 忽略特定的警告 -->
+    <NoWarn>$(NoWarn);MSB3243;MSB3836;CS0433;MSB3277;CS1705;NU1605;CS8618;CS8602;CS8603;CS8604;CS8625</NoWarn>
+
+    <!-- 禁用代码分析 (迁移时保持与旧项目行为一致) -->
+    <EnableNETAnalyzers>false</EnableNETAnalyzers>
+    <EnforceCodeStyleInBuild>false</EnforceCodeStyleInBuild>
+    <AnalysisLevel>none</AnalysisLevel>
+
+    <!-- 处理警告 -->
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningsNotAsErrors>NU1605</WarningsNotAsErrors>
+  </PropertyGroup>
+
+  <!-- Central Package Management -->
+  <PropertyGroup>
+    <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+  </PropertyGroup>
+
+  <!-- 构建完成后复制必要文件到输出目录 -->
+  <Target Name="CopyAdditionalFiles" AfterTargets="Build">
+    <!-- 复制配置文件 -->
+    <ItemGroup>
+      <ConfigFiles Include="$(MSBuildProjectDirectory)\*.config" />
+      <ConfigFiles Include="$(MSBuildProjectDirectory)\*.json" />
+      <LanguageFiles Include="$(MSBuildProjectDirectory)\Languages\*.xml" />
+      <ResourceFiles Include="$(MSBuildProjectDirectory)\Resources\*.svg" />
+    </ItemGroup>
+
+    <Copy SourceFiles="@(ConfigFiles)"
+          DestinationFolder="$(OutputPath)"
+          SkipUnchangedFiles="true"
+          Condition="@(ConfigFiles->Count()) > 0" />
+
+    <Copy SourceFiles="@(LanguageFiles)"
+          DestinationFolder="$(OutputPath)Languages\"
+          SkipUnchangedFiles="true"
+          Condition="@(LanguageFiles->Count()) > 0" />
+
+    <Copy SourceFiles="@(ResourceFiles)"
+          DestinationFolder="$(OutputPath)Resources\"
+          SkipUnchangedFiles="true"
+          Condition="@(ResourceFiles->Count()) > 0" />
+  </Target>
+
+  <!-- 清理构建输出 -->
+  <Target Name="CleanBuildOutput" BeforeTargets="Clean">
+    <RemoveDir Directories="$(OutputPath)" Condition="Exists('$(OutputPath)')" ContinueOnError="true" />
+    <RemoveDir Directories="$(IntermediateOutputPath)" Condition="Exists('$(IntermediateOutputPath)')" ContinueOnError="true" />
+  </Target>
+</Project>

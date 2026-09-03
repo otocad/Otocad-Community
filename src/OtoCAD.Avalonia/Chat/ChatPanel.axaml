@@ -1,0 +1,42 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="OtoCAD.Avalonia.Chat.ChatPanel"
+             Width="280">
+  <Grid RowDefinitions="Auto,*,Auto,Auto" Background="#FAFAFA">
+    <!-- 顶部标题 + 状态 -->
+    <Border Grid.Row="0" Background="#E5F1FB" Padding="10,8" BorderBrush="#B8D4EA" BorderThickness="0,0,0,1">
+      <Grid ColumnDefinitions="Auto,Auto,Auto,*,Auto">
+        <TextBlock Grid.Column="0" Text="💬" FontSize="14"/>
+        <TextBlock Grid.Column="1" Text="AI 助手" FontWeight="Bold" FontSize="13" VerticalAlignment="Center" Margin="6,0,0,0"/>
+        <TextBlock Grid.Column="2" Name="StatusDot" Text="●" Foreground="#999" FontSize="10" VerticalAlignment="Center" Margin="6,0,0,0"/>
+        <TextBlock Grid.Column="3" Name="StatusLabel" Text="未连接" Foreground="#666" FontSize="11" VerticalAlignment="Center" Margin="4,0,0,0"/>
+        <Button Grid.Column="4" Name="ReconnectButton" Content="↻" FontSize="11" Padding="6,2" ToolTip.Tip="重连后端"/>
+      </Grid>
+    </Border>
+
+    <!-- 消息列表 -->
+    <ScrollViewer Grid.Row="1" Name="MessageScroll" Padding="6">
+      <StackPanel Name="MessageList" Spacing="6">
+        <Border Background="#FFFBE6" Padding="8,6" CornerRadius="4">
+          <TextBlock Text="问问关于 OtoCAD 的任何问题 — 比如 &quot;怎么画镀膜&quot; / &quot;ISO 10110-2 是什么&quot;"
+                     Foreground="#876800" FontSize="11" TextWrapping="Wrap"/>
+        </Border>
+      </StackPanel>
+    </ScrollViewer>
+
+    <!-- 输入框 -->
+    <Border Grid.Row="2" Background="White" BorderBrush="#E0E0E0" BorderThickness="0,1,0,0" Padding="6">
+      <Grid ColumnDefinitions="*,Auto">
+        <TextBox Grid.Column="0" Name="InputBox" Watermark="输入消息, Ctrl+Enter 发送"
+                 AcceptsReturn="True" TextWrapping="Wrap" MinHeight="50" MaxHeight="120" FontSize="12"/>
+        <Button Grid.Column="1" Name="SendButton" Content="发送" Margin="4,0,0,0" Padding="10,4"
+                VerticalAlignment="Bottom"/>
+      </Grid>
+    </Border>
+
+    <!-- 底栏 (配额提示) -->
+    <Border Grid.Row="3" Background="#F0F0F0" Padding="8,3">
+      <TextBlock Name="QuotaLabel" Text="—" Foreground="#666" FontSize="10"/>
+    </Border>
+  </Grid>
+</UserControl>
